@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-
-
 const maintenanceSchema = new mongoose.Schema({
     date:{
         type: String,
@@ -35,7 +33,6 @@ const maintenanceSchema = new mongoose.Schema({
             minLength: 2,
             maxLength: 250,
         }
-
     },
 
    
