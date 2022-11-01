@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       minLength: 6,
       maxLength: 25,
-      // unique thông báo nếu tạo tài khảo có cùng tên user
       unique: true,
     },
     email: {
@@ -36,16 +35,14 @@ const userSchema = new mongoose.Schema(
       maxLength: 10,
     },
     history: {
-      //
       maintenance: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Maintenance", // tham chieu
+        ref: "Maintenance",
       },
     },
   },
   // thời gian update
   { timestamps: true }
 );
-
 let User = mongoose.model("User", userSchema);
 module.exports = User;

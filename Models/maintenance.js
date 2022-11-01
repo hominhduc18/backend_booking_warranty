@@ -2,17 +2,16 @@ const mongoose = require('mongoose');
 const maintenanceSchema = new mongoose.Schema({
     date:{
         type: String,
-        
         minLength: 1,
         maxLength: 25,  
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref : "User",// tham chieu
+        ref : "User",
     },
     employee:{
         type: mongoose.Schema.Types.ObjectId,
-        ref : "Employee",// tham chieu
+        ref : "Employee",
     },
     description:{
         type: String,
@@ -23,7 +22,6 @@ const maintenanceSchema = new mongoose.Schema({
     history: {
         start: {
             type: Number,
-            
             minLength: 1,
             maxLength: 5,
         },

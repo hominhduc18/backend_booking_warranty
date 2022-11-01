@@ -47,7 +47,7 @@ const employeeSchema = new mongoose.Schema({
         },
         maintenance: {
             type: mongoose.Schema.Types.ObjectId,
-            ref : "Maintenance",// tham chieu 
+            ref : "Maintenance",
         },
 
     },
@@ -55,7 +55,6 @@ const employeeSchema = new mongoose.Schema({
 // thời gian update
 {timestamps: true}
 );
-
 let Employee = mongoose.model('Employee',employeeSchema );
 module.exports = Employee;
 

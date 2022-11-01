@@ -8,7 +8,8 @@ const bcrypt = require('bcrypt');
 router.post('/addMaintenance', maintenanceControllers.addMaintenance);
 router.get('/getAllMaintenance', maintenanceControllers.getAllMaintenance);
 router.get('/getAMaintenance/:id', maintenanceControllers.getAMaintenance);
-router.delete('/deleteAMaintenance/:id', maintenanceControllers.deleteAMaintenance)
+router.delete('/deleteAMaintenance/:id', maintenanceControllers.deleteAMaintenance);
+router.put('/updateAMaintenance/:id', maintenanceControllers.updateAMaintenance);
 
 
 

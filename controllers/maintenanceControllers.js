@@ -1,6 +1,4 @@
 const Maintenance = require("../models/maintenance");
-
-
 const maintenanceControllers = {
     addMaintenance: async (req, res) => {
         try {
@@ -19,7 +17,6 @@ const maintenanceControllers = {
             res.status(500).json(err);
         }
     },
-
     getAllMaintenance: async (req, res) => {
         try {
             const maintenance = await Maintenance.find()
@@ -44,6 +41,16 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     },
+    updateAMaintenance: async (req, res) => {
+        try {
+            const maintenance =  await Maintenance.findById(req.params.id)
+            await maintenance.updateOne({$set: req.body});
+            res.status(200).json('Updated successfully');
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     
 
 };
