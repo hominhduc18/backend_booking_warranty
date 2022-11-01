@@ -13,10 +13,9 @@ const employeeControllers = {
                 phone: req.body.phone,
                 sex: req.body.sex,
             });
-            const user = await newEmployee.save();
-            res.status(200).json(user);
+            const employee = await newEmployee.save();
+            res.status(200).json(employee);
         } catch (err) {
-            console.log(err);
             res.status(500).json(err);
         }
     },

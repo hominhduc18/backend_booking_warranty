@@ -1,24 +1,51 @@
-const main = require("../models/maintenance");
+const Maintenance = require("../models/maintenance");
 
-const bcrypt = require("bcrypt");
-// Can viet lai
-const mainControllers = {
-    registermain: async (req, res) => {
+
+const maintenanceControllers = {
+    addMaintenance: async (req, res) => {
         try {
-            console.log(req.body);
-            const newEmp = await new main({
-                //    date: new Date(),
-                User: req.body.User,
+            const newMaintenance = await new Maintenance({
+                name: req.body.name,
                 employee: req.body.employee,
                 description: req.body.description,
+                history: {
+                    comment: req.body.history.comment,
+                    start: req.body.history.start
+                }
             });
-            const user = await newEmp.save();
-            res.status(200).json(user);
+            const maintenance = await newMaintenance.save();
+            res.status(200).json(maintenance);
         } catch (err) {
-            console.log(err);
             res.status(500).json(err);
         }
     },
+
+    getAllMaintenance: async (req, res) => {
+        try {
+            const maintenance = await Maintenance.find()
+            res.status(200).json(maintenance)
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    getAMaintenance: async (req, res) => {
+        try {
+            const maintenance = await Maintenance.findById(req.params.id);
+            res.status(200).json(maintenance);
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    },
+    deleteAMaintenance: async (req, res) => {
+        try {
+            const maintenance = await Maintenance.findByIdAndDelete(req.params.id);
+            res.status(200).json(`Delete successfull`)
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    
+
 };
 
-module.exports = mainControllers;
+module.exports = maintenanceControllers;

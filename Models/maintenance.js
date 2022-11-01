@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const maintenanceSchema = new mongoose.Schema({
     date:{
         type: String,
-        required: true,
+        
         minLength: 1,
         maxLength: 25,  
     },
@@ -23,13 +23,12 @@ const maintenanceSchema = new mongoose.Schema({
     history: {
         start: {
             type: Number,
-            required: true,
+            
             minLength: 1,
             maxLength: 5,
         },
         comment: {
             type: String,
-            required: true,
             minLength: 2,
             maxLength: 250,
         }
