@@ -39,6 +39,18 @@ const employeeControllers = {
             console.log(error);
         }
     },
+
+    // get_maintenance: async (req, res) => {
+    //     try {
+    //         const getmain = await Employee.findById(req.params.id);
+    //         res.status(200).json(getmain);
+    //     } catch (error) {
+    //         res.status(500).json(error);
+    //         console.log(error);
+    //     }
+
+    // }, 
+
     deleteAnEmployee: async (req, res) => {
         try {
             await Employee.findByIdAndDelete(req.params.id);
@@ -64,6 +76,8 @@ const employeeControllers = {
             }
         } catch (err) {
             res.status(500).json(err);
+        } 
+    },
 
 
     loginEmployees: async(req, res) => {

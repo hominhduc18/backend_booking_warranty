@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // let refreshToken = [];
 
-const authControllers = {
+const userControllers = {
     registerUser: async (req, res) => {
         try {
             console.log(req.body);
@@ -36,6 +36,15 @@ const authControllers = {
         }
     },
 
+    getUser: async (req, res) => {
+        try {
+            const user = await User.findById(req.params.id);
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    },
+
     deleteAnUser: async (req, res) => {
         try {
             const user = await User.findById(req.params.id);
@@ -53,6 +62,7 @@ const authControllers = {
                 {$set: {
                         username:req.body.username,
                         email:req.body.email,
+                        password:req.body.password,
                         phone:req.body.phone
                     }
                 });
@@ -63,41 +73,35 @@ const authControllers = {
         }
 
     },
-    // forget_password: async (req, res) => {
-    //     const { email } = req.body;
-    //     try {
-    //       const user = await User.findOne({ email });
-    //       if (!user) {
-    //         return res.json({ status: "User Not Exists!!" });
-    //       }
-    //       const secret = JWT_SECRET + user.password;
-    //       const token = jwt.sign({ email: oldUser.email, id: user._id }, secret, {
-    //         expiresIn: "5m",})
-    //     }catch (error){
-    //         res.status(500).json(err);
-    //     }
-    // },
-
-
+   
     loginUsers: async(req, res) => {
         try {
             const user = await User.findOne({username: req.body.username});
             if(!user) {
                  return res.status(404).json("wrong username");
             }
-            const validPassword = bcrypt.compare(req.body.password,user.password);
+            const validPassword = await bcrypt.compare(req.body.password,user.password);
             if(!validPassword){
                 return res.status(404).json("wrong password");
             }
             if(user && validPassword){
-                res.status(200).json(user);
+                const accessToken =  jwt.sign(
+                    {
+                        id: user.id,
+                    },
+                    process.env.JWT_ACCESS_KEY,
+                    {expiresIn:"30h"}
+                    );
+                const {password, ...other} = user._doc;
+                return res.status(200).json({...other});
+                // trả về hết ko trả pass
             }
-        }catch(err){
-            res.status(500).json(err);
+            
+        }catch (error) {
+            return res.status(500).json(error);
         }
-    },
-
+    }
 
 };
 
-module.exports = authControllers;
+module.exports = userControllers;

@@ -7,6 +7,7 @@ const maintenanceSchema = new mongoose.Schema({
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
+        
         ref : "User",
     },
     employee:{
@@ -31,6 +32,9 @@ const maintenanceSchema = new mongoose.Schema({
             maxLength: 250,
         }
     },
+    status:{
+        type: Boolean
+    }
 
    
 },

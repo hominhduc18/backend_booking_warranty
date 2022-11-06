@@ -19,6 +19,7 @@ const employeeSchema = new mongoose.Schema({
         required: true,
         minLength: 6,
     },
+    
     phone:{
         type: Number,
         minLength:1,
@@ -49,6 +50,7 @@ const employeeSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref : "Maintenance",
         },
+        
 
     },
 },
