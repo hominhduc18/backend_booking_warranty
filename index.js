@@ -7,11 +7,11 @@ const dotenv = require('dotenv');
 const app = express();
 const cookieParser = require('cookie-parser');
 
-
+dotenv.config();
 const userRoute = require('./router/user');
 const employeeRoute = require('./router/employee');
 const maintenanceRoute = require('./router/maintenance');
-const adminRoute = require('./router/admin');
+// const adminRoute = require('./router/admin');
 
 app.use(cors());
 app.use(cookieParser());
@@ -19,12 +19,23 @@ app.use(express.json());
 
 
 
-// Kết nối với mongoDB
+
 mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
     if(!err) console.log('database connected');
     else console.log('database disconnected')
 })
 
+// const connectionParams={
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true 
+// }
+// mongoose.connect(process.env.URL,connectionParams)
+//     .then( () => {
+//         console.log('Connected to database ')
+//     })
+//     .catch( (err) => {
+//         console.error(`Error connecting to the database. \n${err}`);
+//     })
 
 
 
@@ -34,7 +45,7 @@ app.use("/v1/employee", employeeRoute);
 
 app.use("/v1/maintenance", maintenanceRoute);
 
-app.use("/v1/admin", adminRoute);
+// app.use("/v1/admin", adminRoute);
 
 app.listen(8000,() => {
     console.log('server is running on port');
