@@ -1,6 +1,6 @@
 //auth đảm nhiệm việc đăng ký và đăng nhập
 const userController = require("../controllers/userControllers")
-const middlewareControllers = require("../controllers/middlewareControllers")
+const middlewareControllers = require("../middleware/middlewareControllers")
 
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
