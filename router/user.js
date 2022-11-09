@@ -10,7 +10,9 @@ const { Router } = require("express");
 router.post('/register', userController.registerUser);
 router.post('/loginUser', userController.loginUsers);
 router.post('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);// user phải login vs logout đc nên có midelware
-router.post('/changepassword', userController.changePasswordUser);
+router.post('/change_password', userController.changePasswordUser);
+router.post('/email_send', userController.emailSendUser);
+
 
 router.get('/getuser', middlewareControllers.verifyToken,userController.getAllUser);
 

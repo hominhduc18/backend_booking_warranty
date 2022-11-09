@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-
+const Otp = require("../Models/otp");
 
 let RefreshToken = [];
 
@@ -136,41 +136,84 @@ const userControllers = {
         res.status(200).json("Logout successful");
     },
 
-    changePasswordUser: async (req, res) => {
-        try{
-            const v = new User(req.body,{
-                old_password: 'required',
-                new_password: 'required',
-                confirm_password: 'required|same:new_password'
-            });
-            const matched = await v.check();
-            if(!matched){
-                return res.status(422).send(v.errors);
-            }
-            const current_user = req.user;
-            if(bcrypt.compareSync(req.body.old_password, current_user.password)){
-                const hashPassword = bcrypt.hashSync(req.body.new_password,10);
-                
-                await User.updateOne({
-                    _id: current_user._id},
-                     {password: hashPassword});
-                    const userData = await User.findOne({_id: current_user._id});
-                    // let jwt_secret = process.env.ACCESS_TOKEN_SECRET_KEY ;
-                    // let token = jwt.sign({
-                    //     data: userData
-                    // },jwt_secret, {expiresIn: '12h'});
-                    const accessToken = userControllers.AcessToken(userData);
-                    return res.status(200).json(userData);   
-            }else{
-                return res.status(500).json("Password does not matched");
-            }
-        }catch (error) {
-            return res.status(500).json(error);
-           
+    emailSendUser: async (req, res) => {
+        let data = await User.findOne({email: req.body.email});
+        console.log(req.body.email);
+        console.log(data);
+        const response = {};
+        if(data){
+            let otpCode = Math.floor((Math.random() *10000)+1);
+            let otpData = await new Otp({
+                email: req.body.email,
+                code: otpCode,
+                expiresIn: new Date().getTime() +300*1000
+            })
+            let otpResponse = await otpData.save();
+            response.statusText = 'success';
+            
+            response.message = 'Please check Your Email Id';
+            res.status(200).json(otpResponse);
+        }else{
+            response.statusText = 'Error';
+            response.message = 'Email Id Not Exists';
         }
-        
+        res.status(200).json(response);
 
-    }
+    },
+    changePasswordUser:async (req, res) => {
+        let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
+        const response =[]
+        if(data){
+            let currentTime = new Date().getTime();
+            let diff = data.expiresIn - currentTime;
+            if(diff < 0){
+                response.message = 'Token expires'
+                response.statusText = 'error'
+
+            }else{
+                let user = await User.findOne({ email: req.body.email})
+                user.password = req.body.password;
+                user.save();
+                response.message = "Password change Successfully"
+                response.statusText ='success';
+            }
+        }else{
+            response.statusText = 'Error';
+            response.message = 'Email Id Not Exists';
+        }
+        res.status(200).json(response);
+
+    },
+
 };
+
+// const mailer =(email, otp)=>{
+//     var nodemailer = require('nodemailer');
+
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'code@gmail.com',
+//     pass: '1234567'
+//   }
+// });
+
+// var mailOptions = {
+//   from: '@gmail.com',
+//   to: 'iuh@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
+
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
+
+// }
+
 
 module.exports = userControllers;

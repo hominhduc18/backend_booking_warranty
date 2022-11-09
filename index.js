@@ -11,7 +11,7 @@ dotenv.config();
 const userRoute = require('./router/user');
 const employeeRoute = require('./router/employee');
 const maintenanceRoute = require('./router/maintenance');
-// const adminRoute = require('./router/admin');
+
 
 app.use(cors());
 app.use(cookieParser());
@@ -45,7 +45,7 @@ app.use("/v1/employee", employeeRoute);
 
 app.use("/v1/maintenance", maintenanceRoute);
 
-// app.use("/v1/admin", adminRoute);
+
 
 app.listen(8000,() => {
     console.log('server is running on port');
