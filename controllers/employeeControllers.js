@@ -1,4 +1,4 @@
-const Employee = require("../models/employee");
+const Employee = require("../Models/employee");
 const bcrypt = require("bcrypt");
 
 const employeeControllers = {
