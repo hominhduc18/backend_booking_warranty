@@ -20,22 +20,16 @@ app.use(express.json());
 
 
 
-mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
-    if(!err) console.log('database connected');
-    else console.log('database disconnected')
-})
+// mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
+//     if(!err) console.log('database connected');
+//     else console.log('database disconnected')
+// })
 
-// const connectionParams={
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true 
-// }
-// mongoose.connect(process.env.URL,connectionParams)
-//     .then( () => {
-//         console.log('Connected to database ')
-//     })
-//     .catch( (err) => {
-//         console.error(`Error connecting to the database. \n${err}`);
-//     })
+
+mongoose.connect(process.env.URL,()=>{
+    console.log("connect started");
+})
+   
 
 
 
