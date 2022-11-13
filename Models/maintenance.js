@@ -34,7 +34,15 @@ const maintenanceSchema = new mongoose.Schema({
     },
     status:{
         type: Boolean
-    }
+    },
+    location: {
+        latitude: {
+            type: Number
+        },
+        longitude: {
+            type: Number
+        }
+      },
 
    
 },
