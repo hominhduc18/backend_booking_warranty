@@ -1,0 +1,19 @@
+{
+
+    "version": 2,
+    "env": {
+        "MONGODB_URL": "mongodb+srv://hominhduc18:586632hmd@cluster0.4plxshe.mongodb.net/?retryWrites=true&w=majority"
+      },
+    "builds": [
+      {
+        "src": "./index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ]
+  }
