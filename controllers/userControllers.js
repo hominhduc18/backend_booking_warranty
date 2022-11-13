@@ -1,9 +1,9 @@
-const User = require("../Models/user");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const Otp = require("../Models/otp");
+const Otp = require("../models/otp");
 
 let RefreshToken = [];
 
