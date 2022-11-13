@@ -36,7 +36,7 @@ const maintenanceControllers = {
     deleteAMaintenance: async (req, res) => {
         try {
             const maintenance = await Maintenance.findByIdAndDelete(req.params.id);
-            res.status(200).json(`Delete successfull`)
+            res.status(200).json(`Delete successfully`)
         } catch (error) {
             res.status(500).json(error);
         }

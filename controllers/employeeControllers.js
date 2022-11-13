@@ -78,6 +78,14 @@ const employeeControllers = {
             res.status(500).json(err);
         } 
     },
+    updateAnEmployee: async (req, res) => {
+        try {
+            
+        } catch (error) {
+            res.status(500).json(err);
+        
+        }
+    },
 
 
     loginEmployees: async(req, res) => {
