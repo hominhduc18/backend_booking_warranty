@@ -8,7 +8,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 
 
-const authRoute = require('./router/auth');
+
 
 
 dotenv.config();
