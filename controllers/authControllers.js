@@ -1,6 +1,11 @@
 const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 
+
+const jwt = require("jsonwebtoken");
+// let refreshToken = [];
+
+
 const authControllers = {
     registerUser: async (req, res) => {
         try {
@@ -41,6 +46,40 @@ const authControllers = {
             console.log(error);
         }
     },
+
+    putUsers: async function (req, res, next) {
+        try {
+            console.log(req.params.id);
+            const user = await User.findOneAndUpdate({id: req.params.id},
+                {$set: {
+                        username:req.body.username,
+                        email:req.body.email,
+                        phone:req.body.phone
+                    }
+                });
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
+    },
+    // forget_password: async (req, res) => {
+    //     const { email } = req.body;
+    //     try {
+    //       const user = await User.findOne({ email });
+    //       if (!user) {
+    //         return res.json({ status: "User Not Exists!!" });
+    //       }
+    //       const secret = JWT_SECRET + user.password;
+    //       const token = jwt.sign({ email: oldUser.email, id: user._id }, secret, {
+    //         expiresIn: "5m",})
+    //     }catch (error){
+    //         res.status(500).json(err);
+    //     }
+    // },
+
+
     loginUsers: async(req, res) => {
         try {
             const user = await User.findOne({username: req.body.username});

@@ -61,23 +61,7 @@ const employeeControllers = {
 
         }
     },
-    loginEmployee: async (req, res) => {
-        try {
-            const employee = await Employee.findOne({ username: req.body.username });
-            if (!employee) {
-                return res.status(404).json("wrong username");
-            }
-            const validPassword = bcrypt.compare(req.body.password, employee.password);
-            if (!validPassword) {
-                return res.status(404).json("wrong password");
-            }
-            if (employee && validPassword) {
-                res.status(200).json(employee);
-            }
-        } catch (err) {
-            res.status(500).json(err);
-        } 
-    },
+   
     updateAnEmployee: async (req, res) => {
         try {
             
@@ -87,25 +71,115 @@ const employeeControllers = {
         }
     },
 
+    AcessToken: (employee) =>{// ngắn hạn
+        return jwt.sign({
+            id: employee.id,
+            username: employee.username
+        },
+        process.env.ACCESS_TOKEN_SECRET_KEY,
+        { expiresIn: "30h"}
+        );
+    },
 
-    loginEmployees: async(req, res) => {
+    refreshToken: (employee) =>{// dài hạn
+        return jwt.sign({
+            id: employee.id,
+            admin: employee.admin,
+        },
+        process.env.ACCESS_TOKEN_SECRET_KEY,
+        { expiresIn: "365d"}
+        );
+    },
+   
+    loginEmployee: async(req, res) => {
         try {
             const employee = await Employee.findOne({username: req.body.username});
             if(!employee) {
                  return res.status(404).json("wrong username");
             }
-            const validPassword = bcrypt.compare(req.body.password,employee.password);
+            const validPassword = await bcrypt.compare(req.body.password,employee.password);
             if(!validPassword){
                 return res.status(404).json("wrong password");
             }
             if(employee && validPassword){
-                res.status(200).json(employee);
+                const accessToken = employeeControllers.AcessToken(employee);
+                
+                const refreshToken = employeeControllers.refreshToken(employee);
+                // luu token vao cookie
+                 res.cookie("RefreshToken",refreshToken,{
+                     httpOnly: true,
+                     secure: false,
+                     path: "/",
+                     sameSite: "strict"
+                 })
+                const {password, ...other} = employee._doc;
+                
+                res.status(200).json({...other, accessToken});
             }
-        }catch(err){
-            res.status(500).json(err);
             
+        }catch (error) {
+            return res.status(500).json(error);
         }
-    }
+    },
+
+    logoutEmployee: async(req, res) => {
+        
+        res.clearCookie('RefreshToken');
+        RefreshToken = RefreshToken.filter(token => token !== req.cookies.refreshToken);
+        res.status(200).json("Logout successful");
+    },
+
+    emailSendEmployee: async (req, res) => {
+        let data = await Employee.findOne({email: req.body.email});
+        console.log(req.body.email);
+        console.log(data);
+        const response = {};
+        if(data){
+            let otpCode = Math.floor((Math.random() *10000)+1);
+            let otpData = await new Otp({
+                email: req.body.email,
+                code: otpCode,
+                expiresIn: new Date().getTime() +300*1000
+            })
+            let otpResponse = await otpData.save();
+            response.statusText = 'success';
+            
+            response.message = 'Please check Your Email Id';
+            res.status(200).json(otpResponse);
+        }else{
+            response.statusText = 'Error';
+            response.message = 'Email Id Not Exists';
+        }
+        res.status(200).json(response);
+
+    },
+    changePasswordEmployee:async (req, res) => {
+        let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
+        const response =[]
+        if(data){
+            let currentTime = new Date().getTime();
+            let diff = data.expiresIn - currentTime;
+            if(diff < 0){
+                response.message = 'Token expires'
+                response.statusText = 'error'
+
+            }else{
+                let employee = await Employee.findOne({ email: req.body.email})
+                employee.password = req.body.password;
+                employee();
+                response.message = "Password change Successfully"
+                response.statusText ='success';
+            }
+        }else{
+            response.statusText = 'Error';
+            response.message = 'Email Id Not Exists';
+        }
+        res.status(200).json(response);
+
+    },
+
 };
+
+   
 
 module.exports = employeeControllers;

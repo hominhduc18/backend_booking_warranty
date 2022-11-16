@@ -14,7 +14,8 @@ router.post('/change_password', userController.changePasswordUser);
 router.post('/email_send', userController.emailSendUser);
 
 
-router.get('/getuser', middlewareControllers.verifyToken,userController.getAllUser);
+router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
+router.get('getUser', middlewareControllers.verifyToken,userController.getUser);
 
 router.put('/updateUser/:id', userController.putUsers);
 

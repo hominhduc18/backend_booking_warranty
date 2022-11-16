@@ -7,6 +7,10 @@ const dotenv = require('dotenv');
 const app = express();
 const cookieParser = require('cookie-parser');
 
+
+const authRoute = require('./router/auth');
+
+
 dotenv.config();
 const userRoute = require('./router/user');
 const employeeRoute = require('./router/employee');
@@ -20,15 +24,22 @@ app.use(express.json());
 
 
 
-// mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
-//     if(!err) console.log('database connected');
-//     else console.log('database disconnected')
-// })
+// app.use(
+//     express.urlencoded({
+//         extended: true,
+//     }),
+// );
 
 
-mongoose.connect(process.env.URL,()=>{
-    console.log("connect started");
+mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
+    if(!err) console.log('database connected');
+    else console.log('database disconnected')
 })
+
+
+// mongoose.connect(process.env.URL,()=>{
+//     console.log("connect started");
+// })
    
 
 
