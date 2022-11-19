@@ -11,15 +11,14 @@ router.post('/email_send', employeeControllers.emailSendEmployee);
 
 
 
+
 router.get('/getAllEmployee', employeeControllers.getAllEmployee);
-router.delete('/deleteEmployee/:id',middlewareController.verifyToken,employeeControllers.deleteAnEmployee);
-
-
 router.get('/getAnEmployee', employeeControllers.getAnEmployee);
 
 
-router.put('/updateUser/:id', employeeControllers.updateAnEmployee);
+router.put('/updateEmployee/:id', employeeControllers.updateAnEmployee);
+
+router.delete('/deleteEmployee/:id',middlewareController.verifydelete,employeeControllers.deleteAnEmployee);
 
 
-router.delete('/deleteEmployee/:id', employeeControllers.deleteAnEmployee);
 module.exports = router;

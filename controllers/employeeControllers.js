@@ -1,5 +1,11 @@
 const Employee = require("../Models/employee");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+const Otp = require("../Models/otp");
+
+let RefreshToken = [];
 
 const employeeControllers = {
     registerEmployee: async (req, res) => {
@@ -39,18 +45,6 @@ const employeeControllers = {
             console.log(error);
         }
     },
-
-    // get_maintenance: async (req, res) => {
-    //     try {
-    //         const getmain = await Employee.findById(req.params.id);
-    //         res.status(200).json(getmain);
-    //     } catch (error) {
-    //         res.status(500).json(error);
-    //         console.log(error);
-    //     }
-
-    // }, 
-
     deleteAnEmployee: async (req, res) => {
         try {
             await Employee.findByIdAndDelete(req.params.id);
@@ -58,20 +52,28 @@ const employeeControllers = {
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
-
         }
     },
    
     updateAnEmployee: async (req, res) => {
         try {
-            
+            console.log(req.params.id);
+            const employee = await Employee.findOneAndUpdate({id: req.params.id},
+                {$set: {
+                        username:req.body.username,
+                        email:req.body.email,
+                        password:req.body.password,
+                        phone:req.body.phone
+                    }
+                });
+            res.status(200).json(employee);
         } catch (error) {
-            res.status(500).json(err);
-        
+            res.status(500).json(error);
+            console.log(error);
         }
     },
 
-    AcessToken: (employee) =>{// ngắn hạn
+    AcessToken: (employee) =>{
         return jwt.sign({
             id: employee.id,
             username: employee.username
@@ -123,7 +125,6 @@ const employeeControllers = {
     },
 
     logoutEmployee: async(req, res) => {
-        
         res.clearCookie('RefreshToken');
         RefreshToken = RefreshToken.filter(token => token !== req.cookies.refreshToken);
         res.status(200).json("Logout successful");
@@ -180,6 +181,5 @@ const employeeControllers = {
 
 };
 
-   
 
 module.exports = employeeControllers;

@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       minLength: 6,
     },
+   
     phone: {
       type: Number,
       minLength: 1,
@@ -46,4 +47,3 @@ const userSchema = new mongoose.Schema(
 );
 let User = mongoose.model("User", userSchema);
 module.exports = User;
-/////////////////sdfsdgfdsgdg//////////////////

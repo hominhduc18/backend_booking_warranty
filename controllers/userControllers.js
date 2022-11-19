@@ -20,6 +20,7 @@ const userControllers = {
                 password: hashed,
                 phone: req.body.phone,
                 sex: req.body.sex,
+                
             });
             //lưu user vào database
             const user = await newUser.save();
@@ -42,7 +43,7 @@ const userControllers = {
 
     getUser: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id);
+            const user = await User.findById(req.params.id );
             res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error)
@@ -51,14 +52,14 @@ const userControllers = {
 
     deleteAnUser: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id);
+            const user = await User.findById(req.params.id );
             res.status(200).json("Delete Successful");
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
         }
     },
-
+    
     putUsers: async function (req, res, next) {
         try {
             console.log(req.params.id);
@@ -186,34 +187,6 @@ const userControllers = {
     },
 
 };
-
-// const mailer =(email, otp)=>{
-//     var nodemailer = require('nodemailer');
-
-// var transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'code@gmail.com',
-//     pass: '1234567'
-//   }
-// });
-
-// var mailOptions = {
-//   from: '@gmail.com',
-//   to: 'iuh@gmail.com',
-//   subject: 'Sending Email using Node.js',
-//   text: 'That was easy!'
-// };
-
-// transporter.sendMail(mailOptions, function(error, info){
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('Email sent: ' + info.response);
-//   }
-// });
-
-// }
 
 
 module.exports = userControllers;
