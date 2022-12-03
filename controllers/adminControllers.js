@@ -90,6 +90,23 @@ const adminControllers = {
         res.status(200).json("Logout successful");
     },
     
+    updateAdmin: async (req, res) => {
+        try {
+            console.log(req.params.id);
+            const admin = await Admin.findOneAndUpdate({id: req.params.id},
+                {$set: {
+                        username:req.body.username,
+                        email:req.body.email,
+                        password:req.body.password,
+                        phone:req.body.phone
+                    }
+                });
+            res.status(200).json(admin);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+    },
 };
 
 
