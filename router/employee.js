@@ -13,7 +13,7 @@ router.post('/email_send', employeeControllers.emailSendEmployee);
 
 
 router.get('/getAllEmployee', employeeControllers.getAllEmployee);
-router.get('/getAnEmployee', employeeControllers.getAnEmployee);
+router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
 
 
 router.put('/updateEmployee/:id', employeeControllers.updateAnEmployee);
