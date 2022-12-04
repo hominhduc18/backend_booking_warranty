@@ -134,12 +134,12 @@ const employeeControllers = {
     },
 
     emailSendEmployee: async (req, res) => {
-        let data = await Employee.findOne({email: req.body.email}).populate("employee");
-        console.log(req.body.email);
+        const data = await Employee.findOne({email: req.body.email});
         console.log(data);
         const response = {};
         if(data){
             const otpCode = Math.floor((Math.random() *10000)+1);
+            console.log(otpCode);
             const otpData = await new Otp({
                 email: req.body.email,
                 code: otpCode,
@@ -147,16 +147,14 @@ const employeeControllers = {
             })
             const otpResponse = await otpData.save();
             response.statusText = 'success';
-            
             response.message = 'Please check Your Email Id';
             res.status(200).json(otpResponse);
         }else{
             response.statusText = 'Error';
             response.message = 'Email Id Not Exists';
         }
-        res.status(200).json(response);
-
     },
+    
     changePasswordEmployee:async (req, res) => {
         let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
         const response =[]
