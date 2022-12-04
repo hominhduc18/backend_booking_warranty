@@ -154,9 +154,10 @@ const employeeControllers = {
             response.message = 'Email Id Not Exists';
         }
     },
-    
+
     changePasswordEmployee:async (req, res) => {
         let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
+        console.log(data);
         const response =[]
         if(data){
             let currentTime = new Date().getTime();
