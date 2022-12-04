@@ -134,18 +134,18 @@ const employeeControllers = {
     },
 
     emailSendEmployee: async (req, res) => {
-        let data = await Employee.findOne({email: req.body.email});
+        let data = await Employee.findOne({email: req.body.email}).populate("employee");
         console.log(req.body.email);
         console.log(data);
         const response = {};
         if(data){
-            let otpCode = Math.floor((Math.random() *10000)+1);
-            let otpData = await new Otp({
+            const otpCode = Math.floor((Math.random() *10000)+1);
+            const otpData = await new Otp({
                 email: req.body.email,
                 code: otpCode,
                 expiresIn: new Date().getTime() +300*1000
             })
-            let otpResponse = await otpData.save();
+            const otpResponse = await otpData.save();
             response.statusText = 'success';
             
             response.message = 'Please check Your Email Id';
