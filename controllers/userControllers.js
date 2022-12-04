@@ -170,7 +170,6 @@ const userControllers = {
             if(diff < 0){
                 response.message = 'Token expires'
                 response.statusText = 'error'
-
             }else{
                 let user = await User.findOne({ email: req.body.email})
                 user.password = req.body.password;

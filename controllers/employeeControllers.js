@@ -18,6 +18,10 @@ const employeeControllers = {
                 password: hashed,
                 phone: req.body.phone,
                 sex: req.body.sex,
+                history:{
+                    experience:req.body.history.experience,
+                    start_avg :req.body.history.start_avg
+                }
             });
             const employee = await newEmployee.save();
             res.status(200).json(employee);

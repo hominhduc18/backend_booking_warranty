@@ -37,13 +37,11 @@ const employeeSchema = new mongoose.Schema(
     history: {
       experience: {
         type: String,
-        required: true,
         minLength: 5,
         maxLength: 20,
       },
       start_avg: {
         type: Number,
-        required: true,
         minLength: 5,
         maxLength: 20,
       },
