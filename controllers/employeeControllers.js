@@ -40,7 +40,8 @@ const employeeControllers = {
     },
     getAnEmployee: async (req, res) => {
         try {
-            const employee = await Employee.findById(req.params.id);
+            const employee = await Employee.findById(req.params.id).populate(
+                "employee");
             res.status(200).json(employee);
         } catch (error) {
             res.status(500).json(error);
