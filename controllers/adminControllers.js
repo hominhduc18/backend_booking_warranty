@@ -15,10 +15,8 @@ const adminControllers = {
             const hashed = await bcrypt.hash(req.body.password, salt);
             //create a new user account
             const new_admin = await new Admin({
-                username: req.body.username,
                 email: req.body.email,
                 password: hashed,
-                phone: req.body.phone,
                 admin :req.body.admin
             });
             //lưu user vào database
@@ -95,10 +93,9 @@ const adminControllers = {
             console.log(req.params.id);
             const admin = await Admin.findOneAndUpdate({id: req.params.id},
                 {$set: {
-                        username:req.body.username,
                         email:req.body.email,
                         password:req.body.password,
-                        phone:req.body.phone
+                        
                     }
                 });
             res.status(200).json(admin);

@@ -3,7 +3,7 @@ const employeeSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      
       minLength: 6,
       maxLength: 25,
       unique: true,
@@ -26,11 +26,11 @@ const employeeSchema = new mongoose.Schema(
       minLength: 1,
       maxLength: 12,
       unique: true,
-      required: true,
+      
     },
     sex: {
       type: String,
-      required: true,
+      
       minLength: 3,
       maxLength: 10,
     },

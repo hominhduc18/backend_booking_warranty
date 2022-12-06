@@ -4,7 +4,6 @@ const AdminSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
       unique: true,
     },
     email: {
@@ -23,11 +22,10 @@ const AdminSchema = new mongoose.Schema(
         minLength: 1,
         maxLength: 12,
         unique: true,
-        required: true,
+        
       },
     admin:{
-        type: Boolean,//phai chu ko
-        default: false,// bat ky user nao ban dau deu ko phai la admin
+        type: Boolean,//phai chu ko 
     },
 
     admin_user: {
