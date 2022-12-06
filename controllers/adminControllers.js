@@ -104,6 +104,24 @@ const adminControllers = {
             console.log(error);
         }
     },
+
+    getAllAdmin: async (req, res) => {
+        try {
+            const admin = await Admin.find();
+            res.status(200).json(admin);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+    },
+    getAnAdmin: async (req, res) => {
+        try {
+            const admin = await Admin.findById(req.params.id );
+            res.status(200).json(admin);
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    },
 };
 
 
