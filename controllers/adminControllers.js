@@ -53,9 +53,9 @@ const adminControllers = {
 
     loginAdmin: async(req, res) => {
         try {
-            const admin = await Admin.findOne({username: req.body.username});
+            const admin = await Admin.findOne({email: req.body.email});
             if(!admin) {
-                 return res.status(404).json("wrong username");
+                 return res.status(404).json("wrong email");
             }
             const validPassword = await bcrypt.compare(req.body.password,admin.password);
             if(!validPassword){
