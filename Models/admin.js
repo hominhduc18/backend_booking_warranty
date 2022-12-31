@@ -16,10 +16,8 @@ const AdminSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-
     phone: {
-        type: Number,
-        
+        type: Number, 
       },
     admin:{
         type: Boolean,//phai chu ko 

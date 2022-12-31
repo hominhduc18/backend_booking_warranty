@@ -15,7 +15,6 @@ const adminControllers = {
             const hashed = await bcrypt.hash(req.body.password, salt);
             //create a new user account
             const new_admin = await new Admin({
-                username: req.body.username,
                 email: req.body.email,
                 password: hashed,
             });
