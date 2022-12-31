@@ -64,14 +64,14 @@ const adminControllers = {
                 const accessToken = adminControllers.AcessToken(admin);
                 
                 
-                const refreshToken = adminControllers.refreshToken(admin);
-                // luu token vao cookie
-                 res.cookie("RefreshToken",refreshToken,{
-                     httpOnly: true,
-                     secure: false,
-                     path: "/",
-                     sameSite: "strict"
-                 })
+                // const refreshToken = adminControllers.refreshToken(admin);
+                // // luu token vao cookie
+                //  res.cookie("RefreshToken",refreshToken,{
+                //      httpOnly: true,
+                //      secure: false,
+                //      path: "/",
+                //      sameSite: "strict"
+                //  })
                 const {password, ...other} = admin._doc;
                 
                 res.status(200).json({...other,accessToken});
