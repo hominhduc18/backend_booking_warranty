@@ -17,7 +17,6 @@ const adminControllers = {
             const new_admin = await new Admin({
                 email: req.body.email,
                 password: hashed,
-                admin :req.body.admin
             });
             //lưu user vào database
             const adminn = await new_admin.save();
