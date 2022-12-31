@@ -10,7 +10,7 @@ router.post('/change_password', employeeControllers.changePasswordEmployee);
 router.post('/email_send', employeeControllers.emailSendEmployee);
 
 router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
-
+router.get('/getAllEmployee', middlewareController.verifyToken,employeeControllers.getAllEmployee);
 
 router.put('/updateEmployee/:id', employeeControllers.updateAnEmployee);
 
