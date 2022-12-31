@@ -122,6 +122,15 @@ const adminControllers = {
             res.status(500).json(error)
         }
     },
+    deleteAdmin: async (req, res) => {
+        try {
+            await Admin.findByIdAndDelete(req.params.id);
+            res.status(200).json("Delete Successful");
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+    },
 };
 
 
