@@ -3,7 +3,6 @@ const employeeSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      
       minLength: 6,
       maxLength: 25,
       unique: true,
@@ -34,6 +33,14 @@ const employeeSchema = new mongoose.Schema(
       minLength: 3,
       maxLength: 10,
     },
+    location: {
+      latitude: {
+          type: Number
+      },
+      longitude: {
+          type: Number
+      }
+    },
     history: {
       experience: {
         type: String,
@@ -48,14 +55,6 @@ const employeeSchema = new mongoose.Schema(
       maintenance: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Maintenance",
-      },
-      location: {
-        latitude: {
-            type: Number
-        },
-        longitude: {
-            type: Number
-        }
       },
     },
   },

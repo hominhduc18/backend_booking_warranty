@@ -18,9 +18,14 @@ const employeeControllers = {
                 password: hashed,
                 phone: req.body.phone,
                 sex: req.body.sex,
+                location:{
+                    latitude: req.body.location.latitude,
+                    longitude: req.body.location.longitude
+                },
                 history:{
                     experience:req.body.history.experience,
                     start_avg :req.body.history.start_avg
+                         
                 }
             });
             const employee = await newEmployee.save();
@@ -40,8 +45,7 @@ const employeeControllers = {
     },
     getAnEmployee: async (req, res) => {
         try {
-            const employee = await Employee.findById(req.params.id).populate(
-                "employee");
+            const employee = await Employee.findById(req.params.id);
             res.status(200).json(employee);
         } catch (error) {
             res.status(500).json(error);
@@ -179,6 +183,20 @@ const employeeControllers = {
         }
         res.status(200).json(response);
 
+    },
+    add_address:async (req, res) => {
+        try{
+            const add_address_Epl = await new Employee({
+                _id:req.params.id,
+                address:req.body.address,
+            });
+            
+            const add = await add_address_Epl.save();
+            res.status(200).json(add);
+
+        }catch (error) {
+            res.status(500).json(error);
+        }
     },
 
 };

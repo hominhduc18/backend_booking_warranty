@@ -9,10 +9,6 @@ router.post('/logoutEmployee', middlewareController.verifyToken, employeeControl
 router.post('/change_password', employeeControllers.changePasswordEmployee);
 router.post('/email_send', employeeControllers.emailSendEmployee);
 
-
-
-
-router.get('/getAllEmployee', employeeControllers.getAllEmployee);
 router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
 
 

@@ -34,6 +34,12 @@ const AdminSchema = new mongoose.Schema(
           ref: "User",
       },
     },
+    admin_employee:{
+      maintenance: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Employee",
+    },
+    }
   },
 
   { timestamps: true }

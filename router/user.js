@@ -18,7 +18,7 @@ router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAl
 router.get('/getAnUser', middlewareControllers.verifyToken,userController.getUser);
 
 router.put('/updateUser/:id', userController.putUsers);
-
+router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
 
 router.delete('/deleteUser/:id', middlewareControllers.verifydelete,userController.deleteAnUser);
 

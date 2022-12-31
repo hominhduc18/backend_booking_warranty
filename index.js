@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+
+const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
 
@@ -17,6 +19,7 @@ const userRoute = require('./router/user');
 const employeeRoute = require('./router/employee');
 const maintenanceRoute = require('./router/maintenance');
 const AdminRoute = require('./router/admin');
+const ggMap = require('./router/map');
 
 app.use(cors());
 app.use(cookieParser());
@@ -42,7 +45,7 @@ mongoose.connect(process.env.URL,()=>{
     console.log("connect started");
 })
    
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/", (req, res) => { res.send("HOME");});
 
@@ -54,6 +57,14 @@ app.use("/v1/maintenance", maintenanceRoute);
 
 
 app.use("/v1/admin", AdminRoute);
+
+/////////
+// Set static folder
+
+
+// Routes
+app.use('/v1/map', ggMap);
+
 
 app.listen(8000,() => {
     console.log('server is running on port');

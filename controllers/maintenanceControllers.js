@@ -50,6 +50,30 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     },
+    orderMaintenance:async(req, res) => {
+        try{
+            const orderMaintenances = await new Maintenance({
+                // user: req.body.user,
+                _id:req.params.id,
+                description: req.body.description,
+                address:req.body.address,
+            });
+            
+            const order = await orderMaintenances.save();
+            res.status(200).json(order);
+
+        }catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    getorderMaintenance:async(req, res)=>{
+        try {
+            const order_maintenance = await Maintenance.findById(req.params.id);
+            res.status(200).json(order_maintenance);
+        }catch(error) {
+            res.status(500).json(error);
+        }
+    }
 
     // createMaintenance: async(req, res) => {
     //     try{

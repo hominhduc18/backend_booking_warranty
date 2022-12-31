@@ -18,7 +18,7 @@ const maintenanceSchema = new mongoose.Schema({
         type: String,
         minLength:1,
         maxLength:250,
-        required: true
+       
     },
     history: {
         start: {
@@ -42,7 +42,14 @@ const maintenanceSchema = new mongoose.Schema({
         longitude: {
             type: Number
         }
+    },
+    address: {
+        type: String,
       },
+    status: {// tình trạng
+        type: String,
+        key: Number,
+    },
 
    
 },

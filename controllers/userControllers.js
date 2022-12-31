@@ -184,6 +184,32 @@ const userControllers = {
         res.status(200).json(response);
 
     },
+    updatePassword: async (req, res) => {
+        try {
+            const username = req.user.sub
+            const { password, newPassword, cfPassword } = req.body
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(newPassword, salt);
+            const data = {
+                password: hash
+            }
+            const user = await User.findOne({ username })
+            const auth = await bcrypt.compare(password, user.password)
+            if (auth) {
+                const newUser = await User.findOneAndUpdate({ username: username }, data, { new: true })
+                if (newUser) {
+                    return res.status(200).json({ message: "Cập nhật thành công" })
+                }
+                return res.status(400).json({ message: "Cập nhật không thành công" })
+            }
+            return res.status(400).json({ message: "Sai mật khẩu" })
+
+
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ message: "Lỗi cập nhật tài khoản" })
+        }
+    },
 
 };
 
