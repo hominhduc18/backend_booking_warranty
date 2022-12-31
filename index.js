@@ -63,7 +63,7 @@ app.use("/v1/admin", AdminRoute);
 
 
 // Routes
-app.use('/v1/map', ggMap);
+// app.use('/v1/map', ggMap);
 
 
 app.listen(8000,() => {
