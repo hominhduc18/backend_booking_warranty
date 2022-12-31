@@ -4,7 +4,7 @@ const AdminSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      default:"",
+      unique: false,
     },
     email: {
       type: String,
@@ -18,7 +18,7 @@ const AdminSchema = new mongoose.Schema(
     },
     phone: {
         type: Number,
-        default:""
+        unique: false,
       },
     admin:{
         type: Boolean,//phai chu ko 
