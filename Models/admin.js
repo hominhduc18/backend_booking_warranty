@@ -19,9 +19,6 @@ const AdminSchema = new mongoose.Schema(
 
     phone: {
         type: Number,
-        minLength: 1,
-        maxLength: 12,
-        unique: true,
         
       },
     admin:{
