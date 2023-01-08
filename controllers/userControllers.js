@@ -21,7 +21,6 @@ const userControllers = {
                 email: req.body.email,
                 password: hashed,
                 phone: req.body.phone,
-                sex: req.body.sex,
                 
             });
             //lưu user vào database
