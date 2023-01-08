@@ -4,8 +4,6 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      minLength: 6,
-      maxLength: 25,
       validate: {
         validator: item => {
             return item.length >= 6
@@ -15,8 +13,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      minLength: 6,
-      maxLength: 25,
       unique: true,
       validate: {
         validator: item => {
@@ -27,7 +23,6 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      minLength: 6,
       validate: {
         validator: item => {
             return item.length >= 8
