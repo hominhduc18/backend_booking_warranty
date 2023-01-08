@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
       minLength: 6,
       maxLength: 25,
       unique: true,
@@ -28,7 +27,6 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
       minLength: 6,
       validate: {
         validator: item => {
@@ -46,13 +44,12 @@ const userSchema = new mongoose.Schema(
       type: String,
 
     },
-    history: {
-      maintenance: {
+    maintenance_Id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Maintenance",
       },
     },
-  },
+   
   // thời gian update
   { timestamps: true }
 );

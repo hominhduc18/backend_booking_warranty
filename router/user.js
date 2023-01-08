@@ -12,10 +12,11 @@ router.post('/loginUser', userController.loginUsers);
 router.post('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 router.post('/change_password', userController.changePasswordUser);
 router.post('/email_send', userController.emailSendUser);
-
-
+router.post('/user_booking', userController.Booking_service);
+router.post('/getbooking', userController.all_Booking_service);
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
 router.get('/getAnUser', middlewareControllers.verifyToken,userController.getUser);
+
 
 router.put('/updateUser/:id', userController.putUsers);
 router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);

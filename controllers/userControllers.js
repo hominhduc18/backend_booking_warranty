@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const Otp = require("../Models/otp");
+const Maintenance = require('../Models/maintenance')
+
 
 let RefreshToken = [];
 
@@ -30,7 +32,44 @@ const userControllers = {
             console.log(err);
         }
     },
+    // register_history: async (req, res) => {
+    //     try {
+            
+    //         const new_history = await new User({
+    //             history:req.body.history
+    //         });
+    //         //lưu user vào database
+    //         const user_book = await new_history.save();
+    //         res.status(200).json(user_book);
+    //     } catch (err) {
+    //         res.status(500).json(err);
+    //         console.log(err);
+    //     }
+    // },
 
+    Booking_service: async(req, res) => {
+        try{
+            const user_booking = new User(
+                {
+                    maintenance_Id:req.body.maintenance_Id,
+                });
+            res.status(200).json(user_booking);
+
+        }catch(error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+    },
+    all_Booking_service: async(req, res) =>{
+        try {
+            const user = await User.find({_id: req.body.id}).populate('maintenance_id');
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
+    },
     getAllUser: async (req, res) => {
         try {
             const user = await User.find();
@@ -49,6 +88,7 @@ const userControllers = {
             res.status(500).json(error)
         }
     },
+    
 
     deleteAnUser: async (req, res) => {
         try {
@@ -209,6 +249,14 @@ const userControllers = {
             console.log(error)
             return res.status(400).json({ message: "Lỗi cập nhật tài khoản" })
         }
+    },
+    register_Day:async(req, res)=>{
+        const Days = await new styleData({ 
+
+
+        })
+
+
     },
 
 };

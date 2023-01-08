@@ -17,6 +17,22 @@ const maintenanceControllers = {
             res.status(500).json(err);
         }
     },
+    addBooking:async(req,res) => {
+        try{
+            const orderMaintenances = await new Maintenance({
+                description: req.body.description,
+                date: req.body.date,
+                startHour:req.body.startHour
+            });
+            
+            const addbooking = await orderMaintenances.save();
+            res.status(200).json(addbooking);
+
+        }catch (error) {
+            res.status(500).json(error);
+        }
+
+    },
     getAllMaintenance: async (req, res) => {
         try {
             const maintenance = await Maintenance.find()
@@ -50,22 +66,7 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     },
-    orderMaintenance:async(req, res) => {
-        try{
-            const orderMaintenances = await new Maintenance({
-                // user: req.body.user,
-                _id:req.params.id,
-                description: req.body.description,
-                address:req.body.address,
-            });
-            
-            const order = await orderMaintenances.save();
-            res.status(200).json(order);
-
-        }catch (error) {
-            res.status(500).json(error);
-        }
-    },
+   
     getorderMaintenance:async(req, res)=>{
         try {
             const order_maintenance = await Maintenance.findById(req.params.id);

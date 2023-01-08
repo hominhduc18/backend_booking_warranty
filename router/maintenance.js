@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 // gọi đến MVC ở controller
 router.post('/addMaintenance', maintenanceControllers.addMaintenance);
 // router.post('/createMaintenance', maintenanceControllers.createMaintenance);
-router.post('/orderMaintenance', maintenanceControllers.orderMaintenance);
+router.post('/addBooking', maintenanceControllers.addBooking);
 
 router.get('/getAllMaintenance', maintenanceControllers.getAllMaintenance);
 router.get('/getAMaintenance/:id', maintenanceControllers.getAMaintenance);
