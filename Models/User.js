@@ -53,5 +53,5 @@ const userSchema = new mongoose.Schema(
   // thời gian update
   { timestamps: true }
 );
-let User = mongoose.model("users", userSchema);
+let User = mongoose.model("User", userSchema);
 module.exports = User;
