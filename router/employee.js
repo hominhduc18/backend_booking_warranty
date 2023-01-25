@@ -6,8 +6,8 @@ const middlewareController = require("../middleware/middlewareControllers");
 router.post('/registerEmployee', employeeControllers.registerEmployee);
 router.post('/loginEmployee', employeeControllers.loginEmployee);
 router.post('/logoutEmployee', middlewareController.verifyToken, employeeControllers.logoutEmployee);
-router.post('/change_password', employeeControllers.changePasswordEmployee);
-router.post('/email_send', employeeControllers.emailSendEmployee);
+router.post('/changepassword', employeeControllers.changePasswordEmployee);
+router.post('/emailsend', employeeControllers.emailSendEmployee);
 
 router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
 router.get('/getAllEmployee', middlewareController.verifyToken,employeeControllers.getAllEmployee);
