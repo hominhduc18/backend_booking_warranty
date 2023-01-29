@@ -31,20 +31,6 @@ const userControllers = {
             console.log(err);
         }
     },
-    // register_history: async (req, res) => {
-    //     try {
-            
-    //         const new_history = await new User({
-    //             history:req.body.history
-    //         });
-    //         //lưu user vào database
-    //         const user_book = await new_history.save();
-    //         res.status(200).json(user_book);
-    //     } catch (err) {
-    //         res.status(500).json(err);
-    //         console.log(err);
-    //     }
-    // },
 
     Booking_service: async(req, res) => {
         try{
@@ -249,15 +235,6 @@ const userControllers = {
             return res.status(400).json({ message: "Lỗi cập nhật tài khoản" })
         }
     },
-    register_Day:async(req, res)=>{
-        const Days = await new styleData({ 
-
-
-        })
-
-
-    },
-
 };
 
 

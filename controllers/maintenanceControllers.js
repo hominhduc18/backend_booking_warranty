@@ -75,20 +75,6 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     }
-
-    // createMaintenance: async(req, res) => {
-    //     try{
-    //         const Create_maintenance = await new Maintenance({
-    //             date: req.body.date,
-    //             employee: req.body.employee,
-    //             description: req.body.description,
-    //         })
-    //         const maintenance = await Create_maintenance.save();
-    //         res.status(200).json(maintenance);
-    //     } catch (err) {
-    //         res.status(500).json(err);
-    //     }
-    // }, 
 };
 
 module.exports = maintenanceControllers;
