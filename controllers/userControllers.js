@@ -38,8 +38,8 @@ const userControllers = {
                 {
                     maintenance_Id:req.body.maintenance_Id,
                 });
-            res.status(200).json(user_booking);
-
+            const user = await user_booking.save();
+            res.status(200).json(user); 
         }catch(error) {
             res.status(500).json(error);
             console.log(error);
