@@ -47,12 +47,8 @@ const userControllers = {
     },
     all_Booking_service: async(req, res) =>{
         try {
-            const user = await User.find(
-                {
-                   
-                }).populate('maintenance_id');
-                
-            res.send(user);
+            const user = await User.findById(req.params._id).populate('maintenance_id');
+            console.log(user);
             res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error);
