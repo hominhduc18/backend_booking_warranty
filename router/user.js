@@ -13,7 +13,7 @@ router.post('/logoutUser',middlewareControllers.verifyToken, userController.logo
 router.post('/changepassword', userController.changePasswordUser);
 router.post('/emailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
-router.post('/getbooking', userController.all_Booking_service);
+// router.post('/getbooking', userController.all_Booking_service);
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
 router.get('/getAnUser', middlewareControllers.verifyToken,userController.getUser);
 
