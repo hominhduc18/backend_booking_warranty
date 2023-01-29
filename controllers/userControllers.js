@@ -49,14 +49,15 @@ const userControllers = {
         try {
             // viết id roi populate
             const user = await User.find({ _id: req.body.user_id}).populate({path: 'maintenance_Id'});
-            const users = await user.save();
-            res.status(200).json(users);
+            
+            res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
         }
 
     },
+   
     getAllUser: async (req, res) => {
         try {
             const user = await User.find();
