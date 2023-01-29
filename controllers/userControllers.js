@@ -47,7 +47,9 @@ const userControllers = {
     },
     all_Booking_service: async(req, res) =>{
         try {
-            const user = await User.find({ _id: req.body.user_id}).populate({path: 'maintenance_Id'});
+            // viết id roi populate
+            const user = await User.find({ _id: req.body.user_id}).populate({path: 'maintenance_Id'}).save();
+            
             res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error);
