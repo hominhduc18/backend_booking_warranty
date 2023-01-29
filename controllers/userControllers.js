@@ -49,7 +49,7 @@ const userControllers = {
         try {
             const user = await User.find(
                 {
-                    _id: req.body.user_id
+                   
                 }).populate('maintenance_id');
                 
             res.send(user);
