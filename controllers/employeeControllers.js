@@ -17,16 +17,7 @@ const employeeControllers = {
                 email: req.body.email,
                 password: hashed,
                 phone: req.body.phone,
-                sex: req.body.sex,
-                location:{
-                    latitude: req.body.location.latitude,
-                    longitude: req.body.location.longitude
-                },
-                history:{
-                    experience:req.body.history.experience,
-                    start_avg :req.body.history.start_avg
-                         
-                }
+              
             });
             const employee = await newEmployee.save();
             res.status(200).json(employee);
@@ -34,6 +25,7 @@ const employeeControllers = {
             res.status(500).json(err);
         }
     },
+
     getAllEmployee: async (req, res) => {
         try {
             const employees = await Employee.find();
