@@ -9,6 +9,7 @@ router.post('/addMaintenance', maintenanceControllers.addMaintenance);
 // router.post('/createMaintenance', maintenanceControllers.createMaintenance);
 router.post('/addBooking', maintenanceControllers.addBooking);
 router.post('/useraddBooking', maintenanceControllers.user_booking_service);
+router.post('/usergetaddBooking', maintenanceControllers.user_all_Booking_service);
 
 router.get('/getAllMaintenance', maintenanceControllers.getAllMaintenance);
 router.get('/getAMaintenance/:id', maintenanceControllers.getAMaintenance);
