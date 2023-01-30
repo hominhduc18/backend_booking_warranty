@@ -6,13 +6,13 @@ const bcrypt = require('bcrypt');
 
 // gọi đến MVC ở controller
 router.post('/addMaintenance', maintenanceControllers.addMaintenance);
-// router.post('/createMaintenance', maintenanceControllers.createMaintenance);
 router.post('/addBooking', maintenanceControllers.addBooking);
 router.post('/useraddBooking', maintenanceControllers.user_booking_service);
 router.post('/usergetaddBooking', maintenanceControllers.user_all_Booking_service);
 
 router.get('/getAllMaintenance', maintenanceControllers.getAllMaintenance);
 router.get('/getAMaintenance/:id', maintenanceControllers.getAMaintenance);
+router.get('/getUserAMaintenance/:id', maintenanceControllers.get_User_Booking_service);
 
 router.get('/get_order/:id', maintenanceControllers.getorderMaintenance);
 router.delete('/deleteAMaintenance/:id', maintenanceControllers.deleteAMaintenance);

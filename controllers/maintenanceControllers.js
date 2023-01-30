@@ -38,6 +38,7 @@ const maintenanceControllers = {
     user_all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate
+            //user_id tự đặt đỡ nhầm _id
             const user = await Maintenance.find({ _id: req.body.user_id}).populate({path: 'user'});
             res.status(200).json(user);
         } catch (error) {
@@ -45,6 +46,14 @@ const maintenanceControllers = {
             console.log(error);
         }
 
+    },
+    get_User_Booking_service: async (req, res) => {
+        try {
+            const user = await Maintenance.findById(req.params.id);
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error)
+        }
     },
     addBooking:async(req,res) => {
         try{
