@@ -1,4 +1,5 @@
 const Maintenance = require("../Models/maintenance");
+const User = require("../Models/User");
 const maintenanceControllers = {
     addMaintenance: async (req, res) => {
         try {
@@ -16,6 +17,34 @@ const maintenanceControllers = {
         } catch (err) {
             res.status(500).json(err);
         }
+    },
+    user_booking_service:async(req, res)=>{
+        try{
+            const userorderMaintenances = await new Maintenance({
+                description: req.body.description,
+                date: req.body.date,
+                startHour:req.body.startHour,
+                user: req.body.user,
+            });
+            
+            const addbooking = await userorderMaintenances.save();
+            res.status(200).json(addbooking);
+
+        }catch (error) {
+            res.status(500).json(error);
+        }
+
+    },
+    user_all_Booking_service: async(req, res) =>{
+        try {
+            // viết id roi populate
+            const user = await Maintenance.find({ _id: req.body.user_id});
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
     },
     addBooking:async(req,res) => {
         try{
