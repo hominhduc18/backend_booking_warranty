@@ -35,12 +35,38 @@ const maintenanceControllers = {
         }
 
     },
+    Epl_booking_service:async(req, res)=>{
+        try{
+            const epl_take_Maintenances = await new Maintenance({
+                maintenance:req.body.maintenance,
+            });
+            
+            const addbooking = await epl_take_Maintenances.save();
+            res.status(200).json(addbooking);
+
+        }catch (error) {
+            res.status(500).json(error);
+        }
+
+    },
     user_all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate
             //user_id tự đặt đỡ nhầm _id
             const user = await Maintenance.find({ _id: req.body.user_id}).populate({path: 'user'});
             res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
+    },
+    Epl_all_Booking_service: async(req, res) =>{
+        try {
+            // viết id roi populate
+            //user_id tự đặt đỡ nhầm _id
+            const epl = await Maintenance.find({ _id: req.body.epl_id}).populate({path: 'user'});
+            res.status(200).json(epl);
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
