@@ -69,7 +69,7 @@ const maintenanceControllers = {
         try {
             // viết id roi populate
             //user_id tự đặt đỡ nhầm _id
-            const epl = await Maintenance.find({ _id: req.body.epl_id}).populate({path: 'user'});
+            const epl = await Maintenance.find({ _id: req.body.epl_id}).populate({path: 'employee'});
             res.status(200).json(epl);
         } catch (error) {
             res.status(500).json(error);

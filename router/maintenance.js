@@ -10,6 +10,7 @@ router.post('/addBooking', maintenanceControllers.addBooking);
 router.post('/useraddBooking', maintenanceControllers.user_booking_service);
 router.post('/usergetaddBooking', maintenanceControllers.user_all_Booking_service);
 router.post('/emladdBooking', maintenanceControllers.Epl_booking_service);
+router.post('/emltakeaddBooking', maintenanceControllers.Epl_all_Booking_service);
 
 router.get('/getAllMaintenance', maintenanceControllers.getAllMaintenance);
 router.get('/getAMaintenance/:id', maintenanceControllers.getAMaintenance);
