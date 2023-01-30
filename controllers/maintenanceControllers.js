@@ -37,11 +37,15 @@ const maintenanceControllers = {
     },
     Epl_booking_service:async(req, res)=>{
         try{
-            const epl_take_Maintenances = await new Maintenance({
-                maintenance:req.body.maintenance,
+            const Eml_take_orderMaintenances = await new Maintenance({
+                description: req.body.description,
+                date: req.body.date,
+                startHour:req.body.startHour,
+                user: req.body.user,
+                employee: req.body.employee,
             });
             
-            const addbooking = await epl_take_Maintenances.save();
+            const addbooking = await Eml_take_orderMaintenances.save();
             res.status(200).json(addbooking);
 
         }catch (error) {
