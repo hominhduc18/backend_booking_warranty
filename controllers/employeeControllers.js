@@ -25,19 +25,19 @@ const employeeControllers = {
             res.status(500).json(err);
         }
     },
-    Epl_Booking_service: async(req, res) => {
-        try{
-            const epl_booking = new Employee(
-                {
-                    maintenance:req.body.maintenance,
-                });
-            const epl = await epl_booking.save();
-            res.status(200).json(epl); 
-        }catch(error) {
-            res.status(500).json(error);
-            console.log(error);
-        }
-    },
+    // Epl_Booking_service: async(req, res) => {
+    //     try{
+    //         const epl_booking = new Employee(
+    //             {
+    //                 maintenance:req.body.maintenance,
+    //             });
+    //         const epl = await epl_booking.save();
+    //         res.status(200).json(epl); 
+    //     }catch(error) {
+    //         res.status(500).json(error);
+    //         console.log(error);
+    //     }
+    // },
     getAllEmployee: async (req, res) => {
         try {
             const employees = await Employee.find();

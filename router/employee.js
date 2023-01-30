@@ -8,7 +8,7 @@ router.post('/loginEmployee', employeeControllers.loginEmployee);
 router.post('/logoutEmployee', middlewareController.verifyToken, employeeControllers.logoutEmployee);
 router.post('/changepassword', employeeControllers.changePasswordEmployee);
 router.post('/emailsend', employeeControllers.emailSendEmployee);
-router.post('/epltakebooking', employeeControllers.Epl_Booking_service);
+// router.post('/epltakebooking', employeeControllers.Epl_Booking_service);
 
 router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
 router.get('/getAllEmployee', middlewareController.verifyToken,employeeControllers.getAllEmployee);
