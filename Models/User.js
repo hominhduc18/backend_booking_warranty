@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -30,7 +31,15 @@ const userSchema = new mongoose.Schema(
         message: "Mật khẩu phải dài hơn 8 kí tự"
     }
     },
-   
+    location: {
+      latitude: {
+          type: Number
+      },
+      longitude: {
+          type: Number
+      }
+    },
+    
     phone: {
       type: Number,
       
@@ -43,10 +52,7 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Maintenance",
       },
-    },
-   
-  // thời gian update
-  { timestamps: true }
-);
+
+    });
 let User = mongoose.model("User", userSchema);
 module.exports = User;

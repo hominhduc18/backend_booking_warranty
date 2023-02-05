@@ -31,6 +31,7 @@ const userControllers = {
             console.log(err);
         }
     },
+  
 
     Booking_service: async(req, res) => {
         try{
@@ -104,6 +105,28 @@ const userControllers = {
                         email:req.body.email,
                         password:req.body.password,
                         phone:req.body.phone
+                    }
+                });
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
+    },
+    putUsers_location: async function (req, res, next) {
+        try {
+            console.log(req.params.id);
+            const user = await User.findOneAndUpdate({id: req.params.id},
+                {$set: {
+                        username:req.body.username,
+                        email:req.body.email,
+                        password:req.body.password,
+                        phone:req.body.phone,
+                        location:{ 
+                            latitude: req.body.location.latitude,
+                            longitude: req.body.location.longitude
+                        }
                     }
                 });
             res.status(200).json(user);

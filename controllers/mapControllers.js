@@ -1,74 +1,48 @@
 const Store = require('../Models/Map');
 
-const ggMap = {
-    getStores: async (req, res,next) => {
-        try {
-            const stores = await Store.find();
-        
-            return res.status(200).json({
-              success: true,
-              count: stores.length,
-              data: stores
-            });
-          } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Server error' });
-          }
-    },
-    addStore: async (req, res, next) => {
-        try {
-            const store = await Store.create(req.body);
-            return res.status(201).json({
-              success: true,
-              data: store
-            });
-          } catch (err) {
-            console.error(err);
-            if (err.code === 11000) {
-              return res.status(400).json({ error: 'This store already exists' });
-            }
-            res.status(500).json({ error: 'Server error' });
-          }
+const Map_location = {
+  location: async (req, res) => {
+    try{
+      const new_location = await new Store({
+        type: req.body.type,
+        coordinates: req.body.coordinates,
+    });
+    const loca = await new_location.save();
+    res.status(200).json(loca);
 
-    }
-    
+    }catch (err) {
+      res.status(500).json(err);
+      console.log(err);
+  }
+  },
+//   Geo_near: async (req, res) => {
+//     try {
+//       const get_location = await new Store({
+//         type: req.body.type,
+//         coordinates: [parseFloat(req.query.lng),parseFloat(req.query.lat)],
+//     })
+//   }catch (err) {
+//     res.status(500).json(err);
+//     console.log(err);
+//   }
+// }
 
+Geo_near:async (req, res)=>{
+  try {
+    const lat = await Store.find({
+      type: "point", coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]},
+      {maxDistance: 100000, spherical: true}
+    )
+    res.send(lat);
+    console.log("2222");
+    res.status(200).json(lat);
+  }catch (err) {
+        res.status(500).json(err);
+        console.log(err);
+      }
+  
+}
 }
 
-// exports.getStores = async (req, res, next) => {
-//   try {
-//     const stores = await Store.find();
 
-//     return res.status(200).json({
-//       success: true,
-//       count: stores.length,
-//       data: stores
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// };
-
-
-
-// @desc  Create a store
-// @route POST /api/v1/stores
-// @access Public
-// exports.addStore = async (req, res, next) => {
-//   try {
-//     const store = await Store.create(req.body);
-
-//     return res.status(201).json({
-//       success: true,
-//       data: store
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     if (err.code === 11000) {
-//       return res.status(400).json({ error: 'This store already exists' });
-//     }
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// };
-module.exports = ggMap;
+module.exports = Map_location;

@@ -34,24 +34,12 @@ const maintenanceSchema = new mongoose.Schema({
             maxLength: 250,
         }
     },
-   
-    status:{
-        type: Boolean
-    },
-    location: {
-        latitude: {
-            type: Number
-        },
-        longitude: {
-            type: Number
-        }
-    },
     address: {
         type: String,
       },
     status: {// tình trạng
-        type: String,
-        key: Number,
+        type: Number,
+        default: -1, //chưa nhận  0 nhận chưa ht 1 hoàn thành 
     },
 
    
