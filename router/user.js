@@ -17,7 +17,7 @@ router.post('/getbooking', userController.all_Booking_service);
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
 router.get('/getAnUser', middlewareControllers.verifyToken,userController.getUser);
 router.get('/getABooking/:id', userController.get_Booking_service);
-
+router.get('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 
 router.put('/updateUser/:id', userController.putUsers);
 router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
