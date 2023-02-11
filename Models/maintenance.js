@@ -1,9 +1,8 @@
  const mongoose = require('mongoose');
 const maintenanceSchema = new mongoose.Schema({
     date:{
-        type: String,
-        minLength: 1,
-        maxLength: 25,  
+        type: Date,
+        
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,

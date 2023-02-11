@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema(
         message: "Email không hợp lệ"
     }
     },
+    address:{
+      type: String,
+    },
     password: {
       type: String,
       validate: {
