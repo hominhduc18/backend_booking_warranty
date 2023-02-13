@@ -15,11 +15,14 @@ const maintenanceSchema = new mongoose.Schema({
     description:{
         type: String,
     },
+    noted:{
+        type: String,
+    },
     startHour:{
-        type:String,
+        type:Date,
     },
     endHour:{
-        type:String,
+        type:Date,
     },
     history: {
         start: {

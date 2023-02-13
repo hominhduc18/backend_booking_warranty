@@ -22,6 +22,7 @@ const maintenanceControllers = {
         try{
             const userorderMaintenances = await new Maintenance({
                 description: req.body.description,
+                noted: req.body.noted,
                 date: req.body.date,
                 startHour:req.body.startHour,
                 user: req.body.user,
