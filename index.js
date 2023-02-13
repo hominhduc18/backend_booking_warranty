@@ -26,25 +26,25 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-const socketIo = require("socket.io")(server, {
-    cors: {
-        origin: "*",
-    }
-  }); 
+// const socketIo = require("socket.io")(server, {
+//     cors: {
+//         origin: "*",
+//     }
+//   }); 
   // nhớ thêm cái cors này để tránh bị Exception nhé :D  ở đây mình làm nhanh nên cho phép tất cả các trang đều cors được. 
 
 
-socketIo.on("connection", (socket) => { ///Handle khi có connect từ client tới
-  console.log("New client connected" + socket.id); 
+// socketIo.on("connection", (socket) => { ///Handle khi có connect từ client tới
+//   console.log("New client connected" + socket.id); 
 
-  socket.on("sendDataClient", function(data) { // Handle khi có sự kiện tên là sendDataClient từ phía client
-    socketIo.emit("sendDataServer", { data });// phát sự kiện  có tên sendDataServer cùng với dữ liệu tin nhắn từ phía server
-  })
+//   socket.on("sendDataClient", function(data) { // Handle khi có sự kiện tên là sendDataClient từ phía client
+//     socketIo.emit("sendDataServer", { data });// phát sự kiện  có tên sendDataServer cùng với dữ liệu tin nhắn từ phía server
+//   })
 
-  socket.on("disconnect", () => {
-    console.log("Client disconnected"); // Khi client disconnect thì log ra terminal.
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected"); // Khi client disconnect thì log ra terminal.
+//   });
+// });
 
 // app.use(
 //     express.urlencoded({
@@ -83,9 +83,9 @@ app.use("/v1/admin", AdminRoute);
 // Routes
 app.use('/v1/locations', ggMap);
 
-server.listen(8000, () => {
-    console.log('Server đang chay tren cong 8000');
-});
-// app.listen(8000,() => {
-//     console.log('server is running on port');
-// })
+// server.listen(8000, () => {
+//     console.log('Server đang chay tren cong 8000');
+// });
+app.listen(8000,() => {
+    console.log('server is running on port');
+})

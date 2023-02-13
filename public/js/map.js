@@ -1,7 +1,7 @@
 
 
 mapboxgl.accessToken =
-  'pk.eyJ1IjoiYnRyYXZlcnN5IiwiYSI6ImNqenY5MThjMDBqZ3YzY3A0N3ppZTA5Y2QifQ.LrFjedgw1wG34TkWCpNtFg';
+  'pk.eyJ1IjoiaG9taW5oZHVjMTgiLCJhIjoiY2xlMmpsbnA1MXY2NDNybnZhOGk3Z216MiJ9.YrHRleilK6B7KEt6dEcMGQ';
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v11',
