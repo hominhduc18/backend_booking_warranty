@@ -26,6 +26,7 @@ const maintenanceControllers = {
                 date: req.body.date,
                 startHour:req.body.startHour,
                 user: req.body.user,
+                address: req.body.address,
             });
             
             const addbooking = await userorderMaintenances.save();
