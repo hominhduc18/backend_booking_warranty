@@ -53,6 +53,14 @@ const userSchema = new mongoose.Schema(
       type: String,
 
     },
+    code:{
+      type:
+       String,},
+        
+     expiresIn: {
+      type: Number
+    },
+
     maintenance_Id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Maintenance",
