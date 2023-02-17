@@ -33,6 +33,16 @@ const userSchema = new mongoose.Schema(
         },
         message: "Mật khẩu phải dài hơn 8 kí tự"
     }
+   
+    },
+    Confirm_Password:{
+      type: String,
+      validate: {
+        validator: item => {
+            return item.length >= 8
+        },
+        message: "Mật khẩu phải dài hơn 8 kí tự"
+    }
     },
     location: {
       latitude: {
