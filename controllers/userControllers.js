@@ -31,28 +31,7 @@ const userControllers = {
             console.log(err);
         }
     },
-    registerUsers: async (req, res) => {
-        try {
-            console.log(req.body);
-            const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password, salt);
-            //create a new user account
-            const newUser = await new User({
-                email: req.body.email,
-                password: hashed,
-                Confirm_Password:hashed
-                
-            });
-            //lưu user vào database
-            const user = await newUser.save();
-            res.status(200).json(user);
-        } catch (err) {
-            res.status(500).json(err);
-            console.log(err);
-        }
-    },
-  
-
+    
     Booking_service: async(req, res) => {
         try{
             const user_booking = new User(

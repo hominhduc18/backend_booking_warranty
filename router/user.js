@@ -10,7 +10,7 @@ const { Router } = require("express");
 router.post('/register', userController.registerUser);
 router.post('/loginUser', userController.loginUsers);
 //app
-router.post('/register', userController.registerUsers);
+
 //
 router.post('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 router.post('/changepassword', userController.changePasswordUser);
