@@ -59,7 +59,7 @@ const maintenanceControllers = {
     try{
             
             const newMaintenance = await new Maintenance({
-            name: req.body.name,
+            username: req.body.name,
             phone: req.body.phone,
             address: req.body.address,
             date: req.body.date,
