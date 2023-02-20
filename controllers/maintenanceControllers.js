@@ -55,6 +55,27 @@ const maintenanceControllers = {
         }
 
     },
+    create_booking_app: async (req, res) => {
+    try{
+            const response = {};
+            const newMaintenance = await new Maintenance({
+            name: req.body.name,
+            phone: req.body.phone,
+            address: req.body.address,
+            date: req.body.date,
+            startHour:req.body.startHour,
+            description: req.body.description,
+            noted: req.body.noted
+        });
+        const maintenance = await newMaintenance.save();
+        response.statusText = "App_Booking_OKe"
+        res.status(200).json(maintenance);
+
+    }catch (error) {
+        response.statusText = "App_Booking_Err"
+        res.status(500).json(error);
+    }
+    },
     user_all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate

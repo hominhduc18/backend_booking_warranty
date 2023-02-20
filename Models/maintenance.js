@@ -12,6 +12,13 @@ const maintenanceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref : "Employee",
     },
+    username:{
+        type: String,
+    },
+    phone:{
+        type: String,
+    },
+
     description:{
         type: String,
     },
