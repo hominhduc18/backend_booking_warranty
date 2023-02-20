@@ -57,7 +57,7 @@ const maintenanceControllers = {
     },
     create_booking_app: async (req, res) => {
     try{
-            const response = {};
+            
             const newMaintenance = await new Maintenance({
             name: req.body.name,
             phone: req.body.phone,
@@ -68,7 +68,7 @@ const maintenanceControllers = {
             noted: req.body.noted
         });
         const maintenance = await newMaintenance.save();
-        response.statusText = "App_Booking_OKe"
+        
         res.status(200).json(maintenance);
 
     }catch (error) {
