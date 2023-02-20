@@ -19,12 +19,13 @@ const userRoute = require('./router/user');
 const employeeRoute = require('./router/employee');
 const maintenanceRoute = require('./router/maintenance');
 const AdminRoute = require('./router/admin');
+
 const ggMap = require('./router/map');
 
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-
+app.use(bodyParser.json());
 
 // const socketIo = require("socket.io")(server, {
 //     cors: {
@@ -75,6 +76,7 @@ app.use("/v1/maintenance", maintenanceRoute);
 
 
 app.use("/v1/admin", AdminRoute);
+
 
 /////////
 // Set static folder

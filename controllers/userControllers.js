@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const Otp = require("../Models/otp");
-const Maintenance = require('../Models/maintenance')
+
+const Maintenance = require('../Models/maintenance');
+const emailss= require("../Models/otp");// dat trung vs ten 
 
 
 let RefreshToken = [];
@@ -159,6 +160,7 @@ const userControllers = {
     loginUsers: async(req, res) => {
         try {
             const user = await User.findOne({email: req.body.email});
+            console.log(req.body.email);
             if(!user) {
                  return res.status(404).json("wrong email");
             }
@@ -195,50 +197,73 @@ const userControllers = {
     },
 
     emailSendUser: async (req, res) => {
-        let data = await User.findOne({email: req.body.email});
-        console.log(req.body.email);
-        console.log(data);
-        const response = {};
-        if(data){
-            let otpCode = Math.floor((Math.random() *10000)+1);
-            let otpData = await new Otp({
-                email: req.body.email,
-                code: otpCode,
-                expiresIn: new Date().getTime() +300*1000
-            })
-            let otpResponse = await otpData.save();
-            response.statusText = 'success';
+        try{
+            const response = {};
+            const user = await User.findOne({email: req.body.email});
+            console.log(req.body.email);
+            if(!user) {
+                return res.status(404).json("wrong email");
+           }
+            if(user){
+                const otpCode = Math.floor((Math.random() *10000)+1);
+                console.log(otpCode);
+
+
+                const otpData = await new emailss({
+                        
+                        email: req.body.email,
+                        code: otpCode,
+                        expiresIn: new Date().getTime()+300*1000
+
+                })
+                console.log(otpData);
+
+                const response = await otpData.save();
+                console.log(response);
+                // response.message = 'Please check Your Email Id';
+                res.status(200).json(response);
+                }
+               
             
-            response.message = 'Please check Your Email Id';
-            res.status(200).json(otpResponse);
-        }else{
-            response.statusText = 'Error';
-            response.message = 'Email Id Not Exists';
+        }catch (error) {
+            return res.status(500).json(error);
         }
-        res.status(200).json(response);
+        
 
     },
     changePasswordUser:async (req, res) => {
-        let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
-        const response =[]
-        if(data){
-            let currentTime = new Date().getTime();
-            let diff = data.expiresIn - currentTime;
-            if(diff < 0){
-                response.message = 'Token expires'
-                response.statusText = 'error'
+        try{
+
+            const data = await emailss.find({code:req.body.code});
+            
+            console.log(req.body.otpCode);
+            
+            const response ={}
+            if(data){
+                 currentTime = new Date().getTime();
+                let diff = data.expiresIn - currentTime;
+                console.log(data.expiresIn - currentTime);
+                if(diff < 0){
+                    response.statusText = 'OTP Expired. PLEASE SEND THE CODE'
+                }else{
+                    response.statusText = 'OTP oke'
+                    const user = await User.findOneAndUpdate({code: req.body.otpCod},
+                        {$set: {
+                            password:req.body.password,
+                            }
+                        });
+                        console.log(user)
+                    const response = await user.save();
+                    
+                }
             }else{
-                let user = await User.findOne({ email: req.body.email})
-                user.password = req.body.password;
-                user.save();
-                response.message = "Password change Successfully"
-                response.statusText ='success';
+                response.statusText = 'Error';
             }
-        }else{
-            response.statusText = 'Error';
-            response.message = 'Email Id Not Exists';
+            res.status(200).json(response);
+        }catch (error) {
+            return res.status(500).json(error);
         }
-        res.status(200).json(response);
+        
 
     },
     updatePassword: async (req, res) => {
@@ -250,7 +275,7 @@ const userControllers = {
             const data = {
                 password: hash
             }
-            const user = await User.findOne({ username })
+           
             const auth = await bcrypt.compare(password, user.password)
             if (auth) {
                 const newUser = await User.findOneAndUpdate({ username: username }, data, { new: true })

@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
       validate: {
         validator: item => {
             return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(item)
@@ -22,6 +21,12 @@ const userSchema = new mongoose.Schema(
         message: "Email không hợp lệ"
     }
     },
+  //   code: {
+  //     type: Number,
+  // },
+  //   expiresIn: {
+  //     type: Number
+  // },
     address:{
       type: String,
     },
@@ -53,13 +58,7 @@ const userSchema = new mongoose.Schema(
       type: String,
 
     },
-    code:{
-      type:
-       String,},
-        
-     expiresIn: {
-      type: Number
-    },
+  
 
     maintenance_Id: {
         type: mongoose.Schema.Types.ObjectId,

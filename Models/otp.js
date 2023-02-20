@@ -3,11 +3,17 @@ const mongoose = require("mongoose");
 
 const otpSchema = new mongoose.Schema(
     {
-        email: {type: String,},
-        code: {type: String,},
-        expiresIn: {type: Number}
+        email: {
+            type: String
+        },
+        code: {
+            type: Number,
+        },
+        expiresIn: {
+            type: Number
+        }
      },  
      { timestamps: true }
 );
-let otp = mongoose.model("OTP", otpSchema);
-module.exports = otp;
+let email = mongoose.model("OTPEmail", otpSchema);
+module.exports = email;
