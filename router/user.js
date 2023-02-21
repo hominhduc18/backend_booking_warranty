@@ -22,6 +22,7 @@ router.get('/getAnUser', middlewareControllers.verifyToken,userController.getUse
 router.get('/getABooking/:id', userController.get_Booking_service);
 router.get('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 router.get('/get/An/User/:id',userController.getUser);
+
 router.put('/updateUser/:id', userController.putUsers);
 router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
 router.put('/update_location', userController.putUsers_location);

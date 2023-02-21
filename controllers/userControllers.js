@@ -107,7 +107,8 @@ const userControllers = {
                         address:req.body.address
                     }
                 });
-            res.status(200).json(user);
+                const response = await user.save();
+                res.status(200).json(response);
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
