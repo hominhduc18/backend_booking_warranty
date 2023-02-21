@@ -76,6 +76,22 @@ const maintenanceControllers = {
         res.status(500).json(error);
     }
     },
+    get_infor_booking: async(req, res) => {
+        try {
+            const booking = await Maintenance.findById({_id: req.params.id});
+            if(booking){
+                
+
+            }else{
+
+            }
+
+        }catch (error) {
+            response.statusText = "App_Booking_Err"
+            res.status(500).json(error);
+        }
+
+    },
     user_all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate
