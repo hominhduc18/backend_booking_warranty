@@ -72,7 +72,7 @@ const maintenanceControllers = {
         res.status(200).json(maintenance);
 
     }catch (error) {
-        response.statusText = "App_Booking_Err"
+        
         res.status(500).json(error);
     }
     },

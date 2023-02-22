@@ -1,4 +1,5 @@
  const mongoose = require('mongoose');
+
 const maintenanceSchema = new mongoose.Schema({
     date:{
         type: Date,
@@ -26,7 +27,7 @@ const maintenanceSchema = new mongoose.Schema({
         type: String,
     },
     startHour:{
-        type:String,
+        type:Date,
     },
     endHour:{
         type:Date,
