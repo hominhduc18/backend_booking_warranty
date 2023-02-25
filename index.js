@@ -60,7 +60,7 @@ app.use(
 // })
 
 
-mongoose.connect(process.env.URL,()=>{
+mongoose.connect(`mongodb+srv://hominhduc18:586632hmd@cluster0.4plxshe.mongodb.net/?retryWrites=true&w=majority`,()=>{
     console.log("connect started");
 })
    
