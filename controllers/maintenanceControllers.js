@@ -63,13 +63,15 @@ const maintenanceControllers = {
     },
     create_booking_app: async (req, res) => {
     try{
-            
+            const startHour = new Date(req.body.startHour);
+            const { date} = req.body;
+            const parsedDate = DatePicker.parseDate(date);
             const newMaintenance = await new Maintenance({
             username: req.body.username,
             phone: req.body.phone,
             address: req.body.address,
-            date: req.body.date,
-            startHour:req.body.startHour,
+            date: parsedDate,
+            startHour:startHour,
             description: req.body.description,
             noted: req.body.noted
         });
