@@ -54,15 +54,15 @@ app.use(
 );
 
 
-mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
-    if(!err) console.log('database connected');
-    else console.log('database disconnected')
-})
-
-
-// mongoose.connect(process.env.URL,()=>{
-//     console.log("connect started");
+// mongoose.connect("mongodb://localhost:27017/DATN", (err) => {
+//     if(!err) console.log('database connected');
+//     else console.log('database disconnected')
 // })
+
+
+mongoose.connect(process.env.URL,()=>{
+    console.log("connect started");
+})
    
 // app.use(express.static(path.join(__dirname, 'public')));
 
