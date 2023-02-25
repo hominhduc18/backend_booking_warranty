@@ -24,7 +24,7 @@ const maintenanceControllers = {
         try{
             const { date,startHour } = req.body;
             const parsedDate = DatePicker.parseDate(date);
-            const parsedTime = timepicker.parse(time, 'HH:mm');
+            const parsedTime = timepicker.parse(startHour, 'HH:mm');
             const userorderMaintenances = await new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
