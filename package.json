@@ -12,6 +12,7 @@
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "date-picker": "^0.5.0",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
@@ -20,7 +21,8 @@
     "node-geocoder": "^4.2.0",
     "nodemailer": "^6.8.0",
     "request": "^2.88.2",
-    "socket.io": "^4.6.0"
+    "socket.io": "^4.6.0",
+    "timepicker": "^1.14.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

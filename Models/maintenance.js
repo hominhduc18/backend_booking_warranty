@@ -27,7 +27,7 @@ const maintenanceSchema = new mongoose.Schema({
         type: String,
     },
     startHour:{
-        type:Date,
+        type:String,
     },
     endHour:{
         type:Date,

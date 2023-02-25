@@ -1,5 +1,7 @@
 const Maintenance = require("../Models/maintenance");
 const User = require("../Models/User");
+const DatePicker = require('date-picker');
+const timepicker = require('timepicker');
 const maintenanceControllers = {
     addMaintenance: async (req, res) => {
         try {
@@ -20,11 +22,14 @@ const maintenanceControllers = {
     },
     user_booking_service:async(req, res)=>{
         try{
+            const { date,startHour } = req.body;
+            const parsedDate = DatePicker.parseDate(date);
+            const parsedTime = timepicker.parse(time, 'HH:mm');
             const userorderMaintenances = await new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
-                date: req.body.date,
-                startHour:req.body.startHour,
+                date: parsedDate,
+                startHour:parsedTime,
                 user: req.body.user,
                 address: req.body.address,
             });
