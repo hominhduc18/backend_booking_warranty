@@ -22,15 +22,12 @@ const maintenanceControllers = {
     },
     user_booking_service:async(req, res)=>{
         try{
-            const startHour = new Date(req.body.startHour);
-            const { date, } = req.body;
-            const parsedDate = DatePicker.parseDate(date);
-            // const parsedTime = timepicker.parse(startHour, 'HH:mm');
+
             const userorderMaintenances = await new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
-                date: parsedDate,
-                startHour:startHour,
+                date: req.body.date,
+                startHour:req.body.startHour,
                 user: req.body.user,
                 address: req.body.address,
             });
@@ -63,15 +60,15 @@ const maintenanceControllers = {
     },
     create_booking_app: async (req, res) => {
     try{
-            const startHour = new Date(req.body.startHour);
-            const { date} = req.body;
+            
+            const { date,startHour} = req.body;
             const parsedDate = DatePicker.parseDate(date);
             const newMaintenance = await new Maintenance({
             username: req.body.username,
             phone: req.body.phone,
             address: req.body.address,
             date: parsedDate,
-            startHour:startHour,
+            startHour:new Date(startHour),
             description: req.body.description,
             noted: req.body.noted
         });
