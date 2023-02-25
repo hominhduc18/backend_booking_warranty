@@ -22,7 +22,9 @@ const maintenanceControllers = {
     },
     user_booking_service:async(req, res)=>{
         try{
-            const { date,startHour } = req.body;
+            
+            const startHour = Maintenance.startHour.toISOString().replace('T', ' ').replace(/\.\d+Z$/, '');
+            const { date, } = req.body;
             const parsedDate = DatePicker.parseDate(date);
             const parsedTime = timepicker.parse(startHour, 'HH:mm');
             const userorderMaintenances = await new Maintenance({
