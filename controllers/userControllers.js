@@ -87,6 +87,16 @@ const userControllers = {
             res.status(500).json(error)
         }
     },
+    get_An_User:async(req, res) => {
+        try {
+            const user = await User.findById(req.params.id ).populate("maintenance_Id");
+            res.status(200).json(user);
+           
+        } catch (error) {
+            res.status(500).json(error)
+        }
+
+    },
     
 
     deleteAnUser: async (req, res) => {
