@@ -2,7 +2,7 @@
 
 const maintenanceSchema = new mongoose.Schema({
     date:{
-        type: Date,
+        type: String,
         
     },
     user:{
