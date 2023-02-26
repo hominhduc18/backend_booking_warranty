@@ -79,8 +79,9 @@ const userControllers = {
     getUser: async (req, res) => {
         try {
             const user = await User.findById(req.params.id );
-            const {password, ...other} = user._doc;
-            res.status(200).json({...other, user});
+            // const {password, ...other} = user._doc;
+            // res.status(200).json({...other, user});
+            res.status(200).json(user);
            
         } catch (error) {
             res.status(500).json(error)
