@@ -74,13 +74,11 @@ const maintenanceControllers = {
         });
         const maintenance = await newMaintenance.save();
         if(req.body.user){
-            const users = await User.findById(req.body.user);
-            await users.updateOne({
-                $push: {maintenance_Id: maintenance._id}
-            });
-        }
+            // const user = User.find({_id:req.body.user});
+            const user = User.findById(req.body.user);
+            await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+        }  
         res.status(200).json(maintenance);
-
     }catch (error) {
         
         res.status(500).json(error);
