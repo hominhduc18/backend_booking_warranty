@@ -73,7 +73,7 @@ const maintenanceControllers = {
             });
             const maintenance = await newMaintenance.save();
             if(req.body.user){
-                const user = User.find({_id:req.body.user});
+                const user = User.findById(req.body.user);
                 // const user = User.findById(req.body.user);
                 await user.updateOne({ $set : { user: user._id} });
             }  
