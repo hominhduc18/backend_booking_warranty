@@ -59,8 +59,7 @@ const maintenanceControllers = {
 
     },
     create_booking_app: async (req, res) => {
-    try{
-            
+    try{ 
             const { date,startHour} = req.body;
             const parsedDate = DatePicker.parseDate(date);
             const newMaintenance = await new Maintenance({
@@ -68,18 +67,17 @@ const maintenanceControllers = {
             phone: req.body.phone,
             address: req.body.address,
             // date: parsedDate,
+            user: req.body.user,
             startHour:new Date(startHour),
             description: req.body.description,
             noted: req.body.noted
         });
         const maintenance = await newMaintenance.save();
-        if(req.body.User){
-            const user = await User.findById(req.body.User);
-            const updatedUser =await user.updateOne({
-                
+        if(req.body.user){
+            const users = await User.findById(req.body.user);
+            await users.updateOne({
                 $push: {maintenance_Id: maintenance._id}
             });
-            res.status(200).json({ success: true, updatedUser });
         }
         res.status(200).json(maintenance);
 
