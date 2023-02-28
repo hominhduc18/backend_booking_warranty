@@ -59,19 +59,33 @@ const maintenanceControllers = {
 
     },
     create_booking_app: async (req, res) => {
-        try {
-            const newMaintenance= new Book(req.body);
-            const saveMaintenance= await newMaintenance.save();
-            if (req.body.user) {
-              //const author = Author.find({_id: req.body.author}); //you can use the syntax like this
-              const user = User.findById(req.body.user);
-              await user.updateOne({ $push: { maintenance_Id: saveMaintenance._id } });
+        create_booking_app: async (req, res) => {
+            try{ 
+                    const { date,startHour} = req.body;
+                    const parsedDate = DatePicker.parseDate(date);
+                    const newMaintenance = await new Maintenance({
+                    username: req.body.username,
+                    phone: req.body.phone,
+                    address: req.body.address,
+                    // date: parsedDate,
+                    User: req.body.User,
+                    startHour:new Date(startHour),
+                    description: req.body.description,
+                    noted: req.body.noted
+                });
+                const maintenance = await newMaintenance.save();
+                if(req.body.user){
+                    // const user = User.find({_id:req.body.user});
+                    const user = User.findById(req.body.user);
+                    await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+                }  
+                
+                res.status(200).json("Updated successfully");
+            }catch (error) {
+                
+                res.status(500).json(error);
             }
-            res.status(200).json(saveMaintenance);
-          } catch (err) {
-            res.status(500).json(err);
-          }
-    
+        }
     },
     get_infor_booking: async(req, res) => {
         try {
