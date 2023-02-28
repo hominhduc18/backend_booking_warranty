@@ -72,14 +72,17 @@ const maintenanceControllers = {
                     startHour:new Date(startHour),
                     description: req.body.description,
                     noted: req.body.noted});
-                    const maintenance = await newMaintenance.save();
+                    // const maintenance = await newMaintenance.save();
                     if(req.body.user){
                         // const user = User.find({_id:req.body.user});
                         const user = User.findById(req.body.user);
-                        console.log(user);
-                        await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+                        const maintenance = new Maintenance({ user, newMaintenance });
+                        // console.log(user);
+                        // await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+                        await maintenance.save();
+                    
                     }  
-                    res.status(200).json(maintenance);
+                    // res.status(200).json(maintenance);
             }catch (error) {
                 
                 res.status(500).json(error);
