@@ -70,20 +70,17 @@ const maintenanceControllers = {
             // date: parsedDate,
             startHour:new Date(startHour),
             description: req.body.description,
-            noted: req.body.notedś
+            noted: req.body.noted
         });
         const maintenance = await newMaintenance.save();
-        if(req.body.User ){
-            const user = await User.findById(req.body.user);
+        if(req.body.User){
+            const user = await User.findById(req.body.User);
             const updatedUser =await user.updateOne({
                 
                 $push: {maintenance_Id: maintenance._id}
             });
             res.status(200).json({ success: true, updatedUser });
-        }else {
-            res.status(404).json({ success: false, message: 'Booking not found' });
-          }
-          
+        }
         res.status(200).json(maintenance);
 
     }catch (error) {
