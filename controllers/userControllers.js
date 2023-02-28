@@ -78,7 +78,7 @@ const userControllers = {
 
     getUser: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id );
+            const user = await User.findById(req.params.id ).populate("maintenance_Id");
             // const {password, ...other} = user._doc;
             // res.status(200).json({...other, user});
             res.status(200).json(user);
