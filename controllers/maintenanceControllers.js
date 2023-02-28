@@ -130,7 +130,7 @@ const maintenanceControllers = {
     },
     get_User_Booking_service: async (req, res) => {
         try {
-            const user = await Maintenance.findById(req.params.id);
+            const user = await Maintenance.findById(req.params.id).populate("user");
             res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error)
