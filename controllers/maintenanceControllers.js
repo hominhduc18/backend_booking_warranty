@@ -1,7 +1,7 @@
 const Maintenance = require("../Models/maintenance");
 const User = require("../Models/User");
-// const DatePicker = require('date-picker');
-// const timepicker = require('timepicker');
+const DatePicker = require('date-picker');
+const timepicker = require('timepicker');
 const maintenanceControllers = {
     addMaintenance: async (req, res) => {
         try {
@@ -59,33 +59,28 @@ const maintenanceControllers = {
 
     },
     create_booking_app: async (req, res) => {
-        create_booking_app: async (req, res) => {
-            try{ 
-                    const { date,startHour} = req.body;
-                    const parsedDate = DatePicker.parseDate(date);
-                    const newMaintenance = await new Maintenance({
-                    username: req.body.username,
-                    phone: req.body.phone,
-                    address: req.body.address,
-                    // date: parsedDate
-                    startHour:new Date(startHour),
-                    description: req.body.description,
-                    noted: req.body.noted});
-                    // const maintenance = await newMaintenance.save();
-                    if(req.body.user){
-                        // const user = User.find({_id:req.body.user});
-                        const user = User.findById(req.body.user);
-                        const maintenance = new Maintenance({ user, newMaintenance });
-                        // console.log(user);
-                        // await user.updateOne({$push: {maintenance_Id: maintenance._id} });
-                        await maintenance.save();
-                    
-                    }  
-                    // res.status(200).json(maintenance);
-            }catch (error) {
-                
-                res.status(500).json(error);
-            }
+        try{ 
+            const { date,startHour} = req.body;
+            const parsedDate = DatePicker.parseDate(date);
+            const newMaintenance = await new Maintenance({
+                username: req.body.username,
+                phone: req.body.phone,
+                address: req.body.address,
+                date: parsedDate,
+                // startHour:new Date(startHour),
+                description: req.body.description,
+                noted: req.body.noted
+            });
+            const maintenance = await newMaintenance.save();
+            if(req.body.user){
+                const user = User.find({_id:req.body.user});
+                // const user = User.findById(req.body.user);
+                await user.updateOne({ $set : { user: user._id} });
+            }  
+            res.status(200).json(maintenance);
+        }catch (error) {
+            
+            res.status(500).json(error);
         }
     },
     get_infor_booking: async(req, res) => {
