@@ -62,26 +62,18 @@ const maintenanceControllers = {
     try{ 
             const { date,startHour} = req.body;
             const parsedDate = DatePicker.parseDate(date);
-            const newMaintenance = await new Maintenance({
-            username: req.body.username,
-            phone: req.body.phone,
-            address: req.body.address,
-            // date: parsedDate,
-            user: req.body.user,
-            startHour:new Date(startHour),
-            description: req.body.description,
-            noted: req.body.noted
-        });
-        const maintenance = await newMaintenance.save();
-        if(req.body.user){
+            const newMaintenance = new Maintenance(req.body);
+            const maintenance = await newMaintenance.save();
+
+            if(req.body.user){
             // const user = User.find({_id:req.body.user});
-            const user = User.findById(req.body.user);
-            await user.updateOne({$push: {maintenance_Id: maintenance._id} });
-        }  
-        res.status(200).json(maintenance);
+                const user = User.findById(req.body.user);
+                await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+            }  
+            res.status(200).json(maintenance);
     }catch (error) {
         
-        res.status(500).json(error);
+     res.status(500).json(error);
     }
     },
     get_infor_booking: async(req, res) => {
