@@ -1,7 +1,7 @@
 const Maintenance = require("../Models/maintenance");
 const User = require("../Models/User");
-const DatePicker = require('date-picker');
-const timepicker = require('timepicker');
+// const DatePicker = require('date-picker');
+// const timepicker = require('timepicker');
 const maintenanceControllers = {
     addMaintenance: async (req, res) => {
         try {
@@ -71,16 +71,15 @@ const maintenanceControllers = {
                     User: req.body.User,
                     startHour:new Date(startHour),
                     description: req.body.description,
-                    noted: req.body.noted
-                });
-                const maintenance = await newMaintenance.save();
-                if(req.body.user){
-                    // const user = User.find({_id:req.body.user});
-                    const user = User.findById(req.body.user);
-                    await user.updateOne({$push: {maintenance_Id: maintenance._id} });
-                }  
-                
-                res.status(200).json("Updated successfully");
+                    noted: req.body.noted});
+                    const maintenance = await newMaintenance.save();
+                    if(req.body.user){
+                        // const user = User.find({_id:req.body.user});
+                        const user = User.findById(req.body.user);
+                        console.log(user);
+                        await user.updateOne({$push: {maintenance_Id: maintenance._id} });
+                    }  
+                    res.status(200).json(maintenance);
             }catch (error) {
                 
                 res.status(500).json(error);
