@@ -67,8 +67,7 @@ const maintenanceControllers = {
                     username: req.body.username,
                     phone: req.body.phone,
                     address: req.body.address,
-                    // date: parsedDate,
-                    User: req.body.User,
+                    // date: parsedDate
                     startHour:new Date(startHour),
                     description: req.body.description,
                     noted: req.body.noted});
