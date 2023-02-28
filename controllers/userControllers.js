@@ -97,7 +97,36 @@ const userControllers = {
         }
 
     },
-    
+    //API Lấy vị trí khách hàng 
+    get_location_user: async(req, res) =>{
+        const { latitude, longitude } = req.query;
+        try {
+          // Sử dụng OpenStreetMap để lấy địa chỉ dựa trên kinh độ và vĩ độ
+          const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`);
+          const address = response.data.display_name;
+          res.json({ address });
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error getting address' });
+        }
+},
+
+//API lưu thông tin khách hàng 
+    save_infor_user: async(req, res) =>{
+        const { username, latitude, longitude } = req.body;
+
+        try {
+          // Tạo một khách hàng mới và lưu vào MongoDB
+          const user = new User({ username, latitude, longitude });
+          await user.save();
+          res.json({ message: 'User saved' });
+
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error saving user' });
+        }
+
+    },
 
     deleteAnUser: async (req, res) => {
         try {

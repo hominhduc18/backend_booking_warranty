@@ -17,7 +17,7 @@ router.post('/changepassword', userController.changePasswordUser);
 router.post('/useremailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
 router.post('/getbooking', userController.all_Booking_service);
-
+router.post('/location/user', userController.save_infor_user);
 
 
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
@@ -26,6 +26,7 @@ router.get('/getABooking/:id', userController.get_Booking_service);
 router.get('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 router.get('/get/An/User/:id',userController.getUser);
 router.get('/get/a/User/:id', userController.get_An_User);
+router.get('/get/location/User/:id', userController.get_location_user);
 
 
 

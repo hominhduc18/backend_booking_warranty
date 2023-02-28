@@ -88,8 +88,7 @@ const maintenanceControllers = {
         try {
             const booking = await Maintenance.findById({_id: req.params.id});
             if(booking){
-                
-
+                // gán ID người dùng sau khi tìm cho đơn hàng chuẩn bị tạo để lưu trữ thông tin về người dùng đó liên quan đến đơn hàng đó, trong nodejs và mongodb 
             }else{
 
             }
