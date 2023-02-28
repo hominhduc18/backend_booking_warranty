@@ -60,6 +60,7 @@ const maintenanceControllers = {
     },
     create_booking_app: async (req, res) => {
         try{ 
+            const user = User.findById(req.body.user);
             const { date,startHour} = req.body;
             const parsedDate = DatePicker.parseDate(date);
             const newMaintenance = await new Maintenance({
@@ -67,16 +68,16 @@ const maintenanceControllers = {
                 phone: req.body.phone,
                 address: req.body.address,
                 date: parsedDate,
+                user:user._id,
                 // startHour:new Date(startHour),
                 description: req.body.description,
                 noted: req.body.noted
             });
             const maintenance = await newMaintenance.save();
-            if(req.body.user){
-                const user = User.findById(req.body.user);
+            
+            // const user = User.findById(req.body.user);
                 // const user = User.findById(req.body.user);
-                await user.updateOne({ $set : { user: user._id} });
-            }  
+            // await user.updateOne({ $set : { user: user._id} });
             res.status(200).json(maintenance);
         }catch (error) {
             
