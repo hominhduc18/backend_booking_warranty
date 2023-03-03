@@ -122,7 +122,7 @@ const userControllers = {
                 longitude: req.body.location.longitude
             }
          });
-         const users = await newUser.save();
+         const users = await user.save();
             res.status(200).json(users);
 
         } catch (error) {
