@@ -117,8 +117,10 @@ const userControllers = {
         try {
           // Tạo một khách hàng mới và lưu vào MongoDB
           const user = new User({ 
-            latitude:req.body.latitude,
-            longitude:req.body.longitude
+            location:{ 
+                latitude: req.body.location.latitude,
+                longitude: req.body.location.longitude
+            }
          });
          const users = await newUser.save();
             res.status(200).json(users);

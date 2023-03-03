@@ -41,13 +41,13 @@ const userSchema = new mongoose.Schema(
    
     },
     
-    
-    latitude: {
-        type: Number
-    },
-    longitude: {
-      type: Number
-     
+    location: {
+      latitude: {
+          type: Number
+      },
+      longitude: {
+          type: Number
+      }
     },
     
     phone: {
