@@ -26,7 +26,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
+
 
 // const socketIo = require("socket.io")(server, {
 //     cors: {

@@ -42,12 +42,8 @@ const userSchema = new mongoose.Schema(
     },
     
     location: {
-      latitude: {
-          type: Number
-      },
-      longitude: {
-          type: Number
-      }
+      latitude: Number,
+      longitude: Number
     },
     
     phone: {

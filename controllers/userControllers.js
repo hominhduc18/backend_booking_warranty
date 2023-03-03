@@ -112,21 +112,22 @@ const userControllers = {
 },
 
 //API lưu thông tin khách hàng 
-    save_location_user: async(req, res) =>{
+    post_location_user: async(req, res) =>{
         try {
-            // Tạo một khách hàng mới và lưu vào MongoDB
-            const user = new User({ 
-              location:{ 
-                latitude: req.body.latitude,
-                longitude: req.body.longitude
-              }
+            //create a new user account
+            const newUser = await new User({
+                location:{ 
+                    latitude: req.body.latitude,
+                    longitude: req.body.longitude
+                  }
             });
-            const savedUser = await user.save();
-            res.status(200).json(savedUser);
-        }catch (error) {
-            console.log(error);
-            res.status(500).json({ message: 'Internal server error' });
-          }
+
+            const user = await newUser.save();
+            res.status(200).json(user);
+        } catch (err) {
+            res.status(500).json(err);
+            console.log(err);
+        }
     },
 
     deleteAnUser: async (req, res) => {

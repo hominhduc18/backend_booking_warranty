@@ -17,7 +17,7 @@ router.post('/changepassword', userController.changePasswordUser);
 router.post('/useremailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
 router.post('/getbooking', userController.all_Booking_service);
-router.post('/location', userController.save_location_user);
+router.post('/location', userController.post_location_user);
 
 
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
