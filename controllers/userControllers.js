@@ -119,11 +119,11 @@ const userControllers = {
           // Tạo một khách hàng mới và lưu vào MongoDB
           const user = new User({ username, latitude, longitude });
           await user.save();
-          res.json({ message: 'User saved' });
+          res.json( 'User saved' );
 
         } catch (err) {
           console.error(err);
-          res.status(500).json({ message: 'Error saving user' });
+          res.status(500).json('Error saving user');
         }
 
     },
