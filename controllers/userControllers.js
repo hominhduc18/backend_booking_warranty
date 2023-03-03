@@ -113,19 +113,19 @@ const userControllers = {
 
 //API lưu thông tin khách hàng 
     save_infor_user: async(req, res) =>{
-        const { username, latitude, longitude } = req.body;
-
+        
         try {
           // Tạo một khách hàng mới và lưu vào MongoDB
-          const user = new User({ username, latitude, longitude });
-          await user.save();
-          res.json( 'User saved' );
+          const user = new User({ 
+            latitude:req.body.latitude,
+            longitude:req.body.longitude
+         });
+         const users = await newUser.save();
+            res.status(200).json(users);
 
-        } catch (err) {
-          console.error(err);
-          res.status(500).json('Error saving user');
+        } catch (error) {
+            res.status(500).json(error)
         }
-
     },
 
     deleteAnUser: async (req, res) => {
