@@ -17,7 +17,7 @@ router.post('/changepassword', userController.changePasswordUser);
 router.post('/useremailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
 router.post('/getbooking', userController.all_Booking_service);
-router.post('/location/user', userController.save_infor_user);
+router.post('/location', userController.save_infor_user);
 
 
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
@@ -33,7 +33,7 @@ router.get('/get/location/User/:id', userController.get_location_user);
 
 router.put('/updateUser/:id', userController.putUsers);
 router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
-router.put('/update_location', userController.putUsers_location);
+router.put('/update_location/:id', userController.putUsers_location);
 
 router.delete('/deleteUser/:id',middlewareControllers.verifyToken, middlewareControllers.verifydelete,userController.deleteAnUser);
 
