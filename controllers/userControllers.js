@@ -112,7 +112,7 @@ const userControllers = {
 },
 
 //API lưu thông tin khách hàng 
-    save_infor_user: async(req, res) =>{
+    save_location_user: async(req, res) =>{
         try {
             // Tạo một khách hàng mới và lưu vào MongoDB
             const user = new User({ 
