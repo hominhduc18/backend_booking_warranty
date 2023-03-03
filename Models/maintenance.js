@@ -48,8 +48,8 @@ const maintenanceSchema = new mongoose.Schema({
         type: String,
       },
     status: {// tình trạng
-        type: Number,
-        default: -1, //chưa nhận  0 nhận chưa ht 1 hoàn thành 
+        type: String,
+        default: unassigned, //chưa nhận  0 nhận chưa ht 1 hoàn thành 
     },
 
    

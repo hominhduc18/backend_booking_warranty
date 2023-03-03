@@ -89,6 +89,7 @@ app.use("/v1/admin", AdminRoute);
 // server.listen(8000, () => {
 //     console.log('Server đang chay tren cong 8000');
 // });
-app.listen(8000,() => {
-    console.log('server is running on port');
-})
+server.listen(8000, () => {
+    console.log('Server is listening on port 8000');
+  });
+  

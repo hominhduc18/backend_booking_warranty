@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const Otp = require("../Models/otp");
+const User = require("../Models/User");
 
 let RefreshToken = [];
 
@@ -131,6 +132,39 @@ const adminControllers = {
             console.log(error);
         }
     },
+
+
+    update_status: async(req, res) => {
+        try {
+            const assignment = await User.findById({_id: req.params.id});
+            if (!assignment) {
+                return res.status(404).json({ error: 'Assignment not found' });
+              }
+              if (assignment.status !== 'unassigned') {
+                return res.status(400).json({ error: 'Invalid assignment status' });
+              }
+              assignment.status = 'Success';
+              await assignment.save();
+
+              const user = await User.findById(assignment.userId);
+
+              if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+              }
+              
+              
+
+              
+              
+              
+
+
+        }catch(error) {
+            res.status(500).json(error);
+            console.log(error);
+        }
+
+    }
 };
 
 

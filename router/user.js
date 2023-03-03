@@ -6,6 +6,7 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const { Router } = require("express");
 
+
 // gọi đến MVC ở controller
 router.post('/register', userController.registerUser);
 router.post('/loginUser', userController.loginUsers);
@@ -17,7 +18,6 @@ router.post('/changepassword', userController.changePasswordUser);
 router.post('/useremailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
 router.post('/getbooking', userController.all_Booking_service);
-router.post('/location', userController.post_location_user);
 
 
 router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAllUser);
@@ -25,8 +25,8 @@ router.get('/getAlluser', middlewareControllers.verifyToken,userController.getAl
 router.get('/getABooking/:id', userController.get_Booking_service);
 router.get('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
 router.get('/get/An/User/:id',userController.getUser);
-router.get('/get/a/User/:id', userController.get_An_User);
-router.get('/get/location/User/:id', userController.get_location_user);
+router.get('/:id',userController.getAnAuthor);
+router.get('/:id/location', userController.get_location_user);
 
 
 

@@ -22,22 +22,31 @@ const maintenanceControllers = {
     },
     user_booking_service:async(req, res)=>{
         try{
-
-            const userorderMaintenances = await new Maintenance({
+            
+            const userorderMaintenances = new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
                 date: req.body.date,
-                startHour:req.body.startHour,
                 user: req.body.user,
+                startHour:req.body.startHour,
                 address: req.body.address,
             });
-            
             const addbooking = await userorderMaintenances.save();
-            res.status(200).json(addbooking);
+            if(req.body.user) {
+        
+            
+            const user = User.findById(req.body.user);
 
-        }catch (error) {
-            res.status(500).json(error);
+            await user.updateOne({ $push: { maintenance_Id: addbooking._id } });
+            res.status(200).json(addbooking);
+            
         }
+        }catch (error) {
+            
+            
+        res.status(500).json(error);
+        }
+        
 
     },
     Epl_booking_service:async(req, res)=>{
@@ -60,7 +69,7 @@ const maintenanceControllers = {
     },
     create_booking_app: async (req, res) => {
         try{ 
-            const user = User.findById(req.body.user);
+            const userId = req.user._id;
             const { date,startHour} = req.body;
             const parsedDate = DatePicker.parseDate(date);
             const newMaintenance = await new Maintenance({
@@ -68,17 +77,19 @@ const maintenanceControllers = {
                 phone: req.body.phone,
                 address: req.body.address,
                 date: parsedDate,
-                user:user._id,
-                // startHour:new Date(startHour),
                 description: req.body.description,
                 noted: req.body.noted
             });
-            const maintenance = await newMaintenance.save();
+            if(req.body.user) {
+                const addbooking = await userorderMaintenances.save();
+                
+                const user = User.findById(req.body.user);
+    
+                await user.updateOne({ $push: { maintenance_Id: addbooking._id } });
+                res.status(200).json(addbooking);
+                
+            }
             
-            // const user = User.findById(req.body.user);
-                // const user = User.findById(req.body.user);
-            // await user.updateOne({ $set : { user: user._id} });
-            res.status(200).json(maintenance);
         }catch (error) {
             
             res.status(500).json(error);
@@ -183,7 +194,7 @@ const maintenanceControllers = {
    
     getorderMaintenance:async(req, res)=>{
         try {
-            const order_maintenance = await Maintenance.findById(req.params.id);
+            const order_maintenance = await Maintenance.findById(req.params.id).populate("user");;
             res.status(200).json(order_maintenance);
         }catch(error) {
             res.status(500).json(error);

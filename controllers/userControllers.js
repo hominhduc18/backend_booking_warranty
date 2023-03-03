@@ -2,6 +2,7 @@ const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
+
 const cookieParser = require('cookie-parser');
 
 const Maintenance = require('../Models/maintenance');
@@ -78,57 +79,48 @@ const userControllers = {
 
     getUser: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id ).populate("maintenance_Id");
-            // const {password, ...other} = user._doc;
-            // res.status(200).json({...other, user});
-            res.status(200).json(user);
-           
-        } catch (error) {
-            res.status(500).json(error)
+            const order_maintenance = await User.findById(req.params.id);
+            res.status(200).json(order_maintenance);
+        }catch(error) {
+            res.status(500).json(error);
         }
+    
     },
-    get_An_User:async(req, res) => {
+    getAnAuthor: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id ).populate("maintenance_Id");
-            res.status(200).json(user);
-           
-        } catch (error) {
-            res.status(500).json(error)
-        }
-
-    },
-    //API Lấy vị trí khách hàng 
-    get_location_user: async(req, res) =>{
-        const { latitude, longitude } = req.query;
-        try {
-          // Sử dụng OpenStreetMap để lấy địa chỉ dựa trên kinh độ và vĩ độ
-          const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`);
-          const address = response.data.display_name;
-          res.json({ address });
-        } catch (err) {
-          console.error(err);
-          res.status(500).json({ message: 'Error getting address' });
-        }
-},
-
-//API lưu thông tin khách hàng 
-    post_location_user: async(req, res) =>{
-        try {
-            //create a new user account
-            const newUser = await new User({
-                location:{ 
-                    latitude: req.body.latitude,
-                    longitude: req.body.longitude
-                  }
-            });
-
-            const user = await newUser.save();
-            res.status(200).json(user);
+            const author = await User.findById(req.params.id).populate("maintenance_Id");
+            res.status(200).json(author);
         } catch (err) {
             res.status(500).json(err);
-            console.log(err);
         }
-    },
+      },
+    //API Lấy vị trí khách hàng 
+    get_location_user: async(req, res) =>{
+        try {
+            // Tìm kiếm thông tin người dùng theo id
+            const user = await User.findById(req.params.id);
+        
+            // Kiểm tra xem người dùng có tồn tại hay không
+            if (!user) {
+              return res.status(404).json({ message: 'Người dùng không tồn tại' });
+            }
+        
+            // Lấy thông tin địa điểm của người dùng
+            const latitude = user.location.latitude;
+            const longitude = user.location.longitude;
+        
+            // Trả về phản hồi cho client
+            res.status(200).json({ 
+                latitude: latitude,
+                 longitude: longitude 
+                });
+            
+        }catch (error) {
+        
+            res.status(500).json({ message: 'Đã xảy ra lỗi' });
+          }
+              
+},
 
     deleteAnUser: async (req, res) => {
         try {
@@ -164,10 +156,10 @@ const userControllers = {
             console.log(req.params.id);
             const user = await User.findOneAndUpdate({id: req.params.id},
                 {$set: {
-                        username:req.body.username,
+                        username:req.body.username,// phai có 
                         location:{ 
-                            latitude: req.body.location.latitude,
-                            longitude: req.body.location.longitude
+                            latitude: req.body.latitude,
+                            longitude: req.body.longitude
                         }
                     }
                 });
