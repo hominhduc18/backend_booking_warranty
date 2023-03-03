@@ -165,9 +165,6 @@ const userControllers = {
             const user = await User.findOneAndUpdate({id: req.params.id},
                 {$set: {
                         username:req.body.username,
-                        email:req.body.email,
-                        password:req.body.password,
-                        phone:req.body.phone,
                         location:{ 
                             latitude: req.body.location.latitude,
                             longitude: req.body.location.longitude
