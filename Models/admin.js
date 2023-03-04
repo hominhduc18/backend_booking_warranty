@@ -38,7 +38,7 @@ const AdminSchema = new mongoose.Schema(
     },
     status: {// tình trạng
       type: String,
-      default: unassigned, 
+     
      /*
      1- Success
      0 - process

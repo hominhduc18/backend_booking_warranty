@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema(
     },
     status: {// tình trạng
       type: String,
-      default: unassigned, //chưa nhận  0 nhận chưa ht 1 hoàn thành 
+        //chưa nhận  0 nhận chưa ht 1 hoàn thành 
   },
   
     maintenance_Id: {
