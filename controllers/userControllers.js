@@ -2,11 +2,11 @@ const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
-
+const fetch = import('node-fetch').then((module) => module.default);
 const cookieParser = require('cookie-parser');
-
 const Maintenance = require('../Models/maintenance');
 const emailss= require("../Models/otp");// dat trung vs ten 
+const axios = require('axios');
 
 
 let RefreshToken = [];
@@ -120,7 +120,27 @@ const userControllers = {
             res.status(500).json({ message: 'Đã xảy ra lỗi' });
           }
               
-},
+    },
+    get_address_userMain:async(req, res)=>{
+        try{
+            const user = await User.findById(req.params.id).populate("maintenance_Id");
+            const address = user.maintenance_Id.address;
+            console.log(address);
+            const geocodeUrl = 
+             `https://nominatim.openstreetmap.org/search?q=${
+                encodeURIComponent(address)}&format=json&limit=1`;
+            const geocodeResponse = await fetch.get(geocodeUrl)
+            .then(res => res.data);
+
+            // fetch ko đc dung request mà dùng then để trả về json 
+            const location = geocodeResponse[0].geometry.location;
+            res.status(200).json({ latitude: location.latitude, longitude: location.longitude });
+            
+        }catch(error){
+            res.status(500).json(error);
+            console.log(error);
+        }
+    },
 
     deleteAnUser: async (req, res) => {
         try {

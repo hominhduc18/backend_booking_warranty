@@ -46,7 +46,10 @@ const maintenanceSchema = new mongoose.Schema({
     },
     address: {
         type: String,
+
       },
+    longitude: Number,
+    latitude: Number,
     status: {// tình trạng
         type: String,
         //chưa nhận  0 nhận chưa ht 1 hoàn thành 

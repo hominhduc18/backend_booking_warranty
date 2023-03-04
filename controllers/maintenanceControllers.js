@@ -23,13 +23,15 @@ const maintenanceControllers = {
     user_booking_service:async(req, res)=>{
         try{
             
+            
             const userorderMaintenances = new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
                 date: req.body.date,
                 user: req.body.user,
                 startHour:req.body.startHour,
-                address: req.body.address,
+                address:req.body.address,
+
             });
             const addbooking = await userorderMaintenances.save();
             if(req.body.user) {

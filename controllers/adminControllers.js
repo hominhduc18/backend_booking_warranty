@@ -152,13 +152,6 @@ const adminControllers = {
                 return res.status(404).json({ error: 'User not found' });
               }
               
-              
-
-              
-              
-              
-
-
         }catch(error) {
             res.status(500).json(error);
             console.log(error);

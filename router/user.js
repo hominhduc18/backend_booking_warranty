@@ -8,7 +8,7 @@ const { Router } = require("express");
 
 
 // gọi đến MVC ở controller
-router.post('/k', userController.registerUser);
+router.post('/register', userController.registerUser);
 router.post('/loginUser', userController.loginUsers);
 //app
 
@@ -28,7 +28,7 @@ router.get('/get/An/User/:id',userController.getUser);
 router.get('/:id',userController.getAnAuthor);
 router.get('/:id/location', userController.get_location_user);
 
-
+router.get('/address/userMainternace/:id',userController.get_address_userMain);
 
 
 router.put('/updateUser/:id', userController.putUsers);
