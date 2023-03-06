@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const Otp = require("../Models/otp");
-
+const fetch = require('node-fetch');
 let RefreshToken = [];
 
 const employeeControllers = {
@@ -25,19 +25,51 @@ const employeeControllers = {
             res.status(500).json(err);
         }
     },
-    // Epl_Booking_service: async(req, res) => {
-    //     try{
-    //         const epl_booking = new Employee(
-    //             {
-    //                 maintenance:req.body.maintenance,
-    //             });
-    //         const epl = await epl_booking.save();
-    //         res.status(200).json(epl); 
-    //     }catch(error) {
-    //         res.status(500).json(error);
-    //         console.log(error);
-    //     }
-    // },
+    emp_set_address: async (req, res)=>{
+        try{
+            const employee = await Employee.findById(req.params.id);
+            if(!employee){
+                res.status(404).send('Employee not found');
+            }else{
+                employee.address = req.body.address;
+                employee.save();
+            }
+            res.status(200).json(employee);
+        }catch(error) {
+            res.status(500).json(error)
+        }
+    },
+    get_location_emp:async (req, res) =>{
+        try{
+            const employee = await Employee.findById(req.params.id);
+            const address = employee.address;
+            console.log(address);
+
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
+            console.log(url);
+            fetch(url,{ timeout: 10000 })
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0 && data[0].hasOwnProperty('lat') && data[0].hasOwnProperty('lon')) {
+                    console.log(data);
+                    const latitude = data[0].lat;
+                    const longitude = data[0].lon;
+                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                    res.status(200).json({ 
+                      latitude: latitude,
+                      longitude: longitude
+                    });
+                  } else {
+                    console.log('Cannot find longitude and latitude for the address');
+                    res.status(404).json({ message: 'Cannot find longitude and latitude for the address' });
+                  }
+            });
+
+        }catch(error) {
+            res.status(500).json(error)
+        }
+
+    },
     getAllEmployee: async (req, res) => {
         try {
             const employees = await Employee.find();
@@ -106,9 +138,9 @@ const employeeControllers = {
    
     loginEmployee: async(req, res) => {
         try {
-            const employee = await Employee.findOne({username: req.body.username});
+            const employee = await Employee.findOne({email: req.body.email});
             if(!employee) {
-                 return res.status(404).json("wrong username");
+                 return res.status(404).json("wrong email");
             }
             const validPassword = await bcrypt.compare(req.body.password,employee.password);
             if(!validPassword){

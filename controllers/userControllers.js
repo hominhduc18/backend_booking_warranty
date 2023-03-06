@@ -2,11 +2,11 @@ const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
-const fetch = import('node-fetch').then((module) => module.default);
+// const fetch = import('node-fetch').then((module) => module.default);
 const cookieParser = require('cookie-parser');
 const Maintenance = require('../Models/maintenance');
 const emailss= require("../Models/otp");// dat trung vs ten 
-const axios = require('axios');
+const fetch = require('node-fetch');
 
 
 let RefreshToken = [];
@@ -121,27 +121,36 @@ const userControllers = {
           }
               
     },
-    get_address_userMain:async(req, res)=>{
-        try{
-            const user = await User.findById(req.params.id).populate("maintenance_Id");
-            const address = user.maintenance_Id.address;
-            console.log(address);
-            const geocodeUrl = 
-             `https://nominatim.openstreetmap.org/search?q=${
-                encodeURIComponent(address)}&format=json&limit=1`;
-            const geocodeResponse = await fetch.get(geocodeUrl)
-            .then(res => res.data);
-
-            // fetch ko đc dung request mà dùng then để trả về json 
-            const location = geocodeResponse[0].geometry.location;
-            res.status(200).json({ latitude: location.latitude, longitude: location.longitude });
-            
-        }catch(error){
-            res.status(500).json(error);
-            console.log(error);
+     get_address_userMain :async(req, res) => {
+        try {
+          const user = await User.findById(req.params.id).populate("maintenance_Id");
+          const address = user.maintenance_Id.address;
+          console.log(address);
+      
+          const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
+          console.log(url);
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0 && data[0].hasOwnProperty('lat') && data[0].hasOwnProperty('lon')) {
+                    const latitude = data[0].lat;
+                    const longitude = data[0].lon;
+                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                    res.status(200).json({ 
+                      latitude: latitude,
+                      longitude: longitude
+                    });
+                  } else {
+                    console.log('Cannot find longitude and latitude for the address');
+                    res.status(404).json({ message: 'Cannot find longitude and latitude for the address' });
+                  }
+            });
+      
+        } catch (error) {
+          res.status(500).json(error);
+          console.log(error);
         }
-    },
-
+      },
     deleteAnUser: async (req, res) => {
         try {
             const user = await User.findById(req.params.id );
@@ -346,6 +355,7 @@ const userControllers = {
             return res.status(400).json({ message: "Lỗi cập nhật tài khoản" })
         }
     },
+    
 };
 
 

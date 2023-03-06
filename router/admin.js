@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const { Router } = require("express");
 const { model } = require("mongoose");
 const adminControllers = require("../controllers/adminControllers");
+const { route } = require("./user");
 
 
 router.post('/registerAdmin', adminController.register_admin);

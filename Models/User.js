@@ -21,12 +21,11 @@ const userSchema = new mongoose.Schema(
         message: "Email không hợp lệ"
     }
     },
-  //   code: {
-  //     type: Number,
-  // },
-  //   expiresIn: {
-  //     type: Number
-  // },
+    createdAt: { 
+      type: Date, 
+      expires: '1w' 
+    },// hẹnj để xóa sau 1 w
+ 
     address:{
       type: String,
     },
@@ -54,6 +53,10 @@ const userSchema = new mongoose.Schema(
       type: String,
 
     },
+    avatar: {
+      type: String,
+    },
+
     status: {// tình trạng
       type: String,
         //chưa nhận  0 nhận chưa ht 1 hoàn thành 

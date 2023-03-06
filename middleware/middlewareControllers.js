@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
-
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
 
 const middlewareController = {
     // xác nhận token phải ng đó ko
@@ -29,7 +31,9 @@ const middlewareController = {
                 return res.status(403),json("You're not allowed to delete other");
             }
         })
-    }
- }
+    },
+    /// Khởi tạo multer để lưu trữ ảnh upload lên server
+    
+}
 
  module.exports = middlewareController;

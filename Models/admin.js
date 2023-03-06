@@ -35,21 +35,13 @@ const AdminSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Employee",
     },
+  },
+    employee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Employee",
     },
-    status: {// tình trạng
-      type: String,
-     
-     /*
-     1- Success
-     0 - process
-      0- processing
-      - 1 - unassigned
-      cancel
-     */ // chưa nhận  0 nhận chưa ht 1 hoàn thành 
   },
-  },
-
-  { timestamps: true }
+    { timestamps: true }
 );
 const Admin = mongoose.model("Admin", AdminSchema);
 module.exports = Admin;

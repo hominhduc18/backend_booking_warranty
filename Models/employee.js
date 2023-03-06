@@ -33,6 +33,9 @@ const employeeSchema = new mongoose.Schema(
       minLength: 3,
       maxLength: 10,
     },
+    address:{
+      type: String,
+    },
     location: {
       latitude: {
           type: Number

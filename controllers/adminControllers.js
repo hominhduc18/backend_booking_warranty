@@ -5,6 +5,10 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const Otp = require("../Models/otp");
 const User = require("../Models/User");
+const Employee = require("../Models/employee");
+const geocoder = require('geocoder');
+
+// sử dụng geocoder ở đây
 
 let RefreshToken = [];
 
@@ -27,6 +31,37 @@ const adminControllers = {
             console.log(err);
         }
     },
+
+        // kc_min: async (req, res) => {
+        //     try {
+        //         const user = await User.findById(req.params.id);
+        //         const address = user.address;
+        //         console.log(address);
+        //         const location = await geocoder.geocode(address);
+        //         console.log(location);
+        //         const userLocation = {
+        //             latitude: location[0].latitude,
+        //             longitude: location[0].longitude,
+        //         };
+        //         const employees = await Employee.find({});
+        //         const employeeLocations = employees.map((employee) => {
+        //             return {
+        //                 latitude: employee.location.latitude,
+        //                 longitude: employee.location.longitude
+        //             };
+        //         });
+        //         if (employeeLocations.length > 0) {
+        //             const closestEmployee = geolib.findNearest(userLocation, employeeLocations);
+        //             res.json(closestEmployee);
+        //         } else {
+        //             res.status(404).json({ message: "No employees found" });
+        //         }
+        //     } catch (err) {
+        //         res.status(500).json(err);
+        //         console.log(err);
+        //     }
+        // },
+        
 
     AcessToken: (admin) => {// ngắn hạn
         return jwt.sign({
