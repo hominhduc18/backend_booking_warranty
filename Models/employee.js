@@ -7,6 +7,14 @@ const employeeSchema = new mongoose.Schema(
       maxLength: 25,
       unique: true,
     },
+    maintenance_Id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Maintenance",
+    },
+    user:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref : "User",
+  },
     email: {
       type: String,
       required: true,
@@ -36,6 +44,7 @@ const employeeSchema = new mongoose.Schema(
     address:{
       type: String,
     },
+    
     location: {
       latitude: {
           type: Number
@@ -55,10 +64,7 @@ const employeeSchema = new mongoose.Schema(
         minLength: 5,
         maxLength: 20,
       },
-      maintenance: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Maintenance",
-      },
+      
     },
   },
   // thời gian update

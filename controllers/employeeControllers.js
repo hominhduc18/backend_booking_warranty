@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const Otp = require("../Models/otp");
 const fetch = require('node-fetch');
+const Maintenance = require('../Models/maintenance');
 let RefreshToken = [];
 
 const employeeControllers = {
@@ -70,6 +71,14 @@ const employeeControllers = {
         }
 
     },
+    getAnEmployee_main: async (req, res) => {
+        try {
+            const authors = await Employee.findById(req.params.id).populate("maintenance_Id");
+            res.status(200).json(authors);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+      },
     getAllEmployee: async (req, res) => {
         try {
             const employees = await Employee.find();

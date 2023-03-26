@@ -4,12 +4,27 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 // const fetch = import('node-fetch').then((module) => module.default);
 const cookieParser = require('cookie-parser');
+const Employee = require('../Models/employee')
 const Maintenance = require('../Models/maintenance');
 const emailss= require("../Models/otp");// dat trung vs ten 
 const fetch = require('node-fetch');
+const geolib = require('geolib');
 
 
+   // Hàm tính khoảng cách giữa hai điểm trên bề mặt trái đất dựa trên kinh độ và vĩ độ
+      function getDistance(point1, point2) {
+        const R = 6371e3; // Bán kính trái đất
+        const phi1 = toRadians(point1.latitude);
+        const phi2 = toRadians(point2.latitude);
+        const deltaPhi = toRadians(point2.latitude - point1.latitude);
+        const deltaLambda = toRadians(point2.longitude - point1.longitude);
+        const a =
+          Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+          Math.cos(phi1)
+      }
 let RefreshToken = [];
+let employeeLocations = [];
+
 
 const userControllers = {
     registerUser: async (req, res) => {
@@ -151,6 +166,86 @@ const userControllers = {
           console.log(error);
         }
       },
+
+      getNearbyEmployees: async (req, res) => {
+        try {
+          // Lấy địa chỉ từ request của người dùng
+          const user = await User.findById(req.params.id).populate("maintenance_Id");
+          const address = user.maintenance_Id.address;
+          console.log(address);
+        //   const userAddress = req.query.address;
+      
+          // Tìm vị trí (tọa độ) của địa chỉ của người dùng bằng Geocoding
+          const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
+          const data = await response.json();
+      
+          if (data.length > 0 && data[0].hasOwnProperty('lat') && data[0].hasOwnProperty('lon')) {
+            const userLatitude = data[0].lat;
+            const userLongitude = data[0].lon;
+            console.log(userLatitude, userLongitude);
+
+            // nhân viên 
+		    const employeeLocations = [];
+
+            const employees = await Employee.find({ role: 'Employee' });
+            console.log(employees);
+            for (const employee of employees) {
+            const address = employee.address;
+            console.log(address);
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
+            const data = await response.json();
+
+                if (data.length > 0 && data[0].hasOwnProperty('lat') && data[0].hasOwnProperty('lon')) {
+                    const employeeLatitude= employee.latitude = data[0].lat;
+                    console.log(employeeLatitude)
+                
+                    const employeeLongitude= employee.longitude = data[0].lon;
+                    console.log(employeeLongitude)
+                    // const allepl = await employee.save();
+                    // console.log(allepl);
+                    employeeLocations.push({ latitude: employeeLatitude,
+                         longitude: employeeLongitude });
+                         //console.log("địa điểm gần nhất là:")
+                         console.log(employeeLocations.push({
+                            latitude: employeeLatitude,
+                            longitude: employeeLongitude }))
+                }
+            }
+ //             Find all nearby employees within a 1km radius
+                const nearbyEmployees = employeeLocations.filter(employeeLocation => {
+                    const distance = geolib.getDistance(
+                    { latitude: userLatitude, longitude: userLongitude },
+                    { latitude: employeeLocation.latitude, longitude: employeeLocation.longitude });
+                    // console.log("địa điểm gần nhất là:")
+                    console.log(distance <= 100);
+                    return distance <= 1000;
+                });
+
+                
+
+                // Create array of locations to display on map
+                const locations = [
+                    { latitude: userLatitude, 
+                    longitude: userLongitude,
+                     title: 'Your Location' },
+
+                    nearbyEmployees.map(employeeLocation => ({
+                      latitude: employeeLocation.latitude,
+                      longitude: employeeLocation.longitude,
+                      title: employees.find(
+                        employee => employee.latitude === employeeLocation.latitude 
+                        && employee.longitude === employeeLocation.longitude).name
+                    }))]
+                  res.status(200).json({ locations });
+                } 
+                    else {
+                    res.status(404).json(
+                        { message: 'Cannot find longitude and latitude for the user address' });}
+            } catch (error) {
+                console.log(error)
+                    res.status(500).json(error);
+                }
+            },
     deleteAnUser: async (req, res) => {
         try {
             const user = await User.findById(req.params.id );

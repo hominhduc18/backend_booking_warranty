@@ -8,6 +8,9 @@ const bcrypt = require('bcrypt');
 router.post('/addMaintenance', maintenanceControllers.addMaintenance);
 router.post('/addBooking', maintenanceControllers.addBooking);
 router.post('/useraddBooking', maintenanceControllers.user_booking_service);
+// router.put('/employee/receive/:id', maintenanceControllers.add_employee_service);
+
+
 router.post('/usergetaddBooking', maintenanceControllers.user_all_Booking_service);
 router.post('/emladdBooking', maintenanceControllers.Epl_booking_service);
 router.post('/emltakeaddBooking', maintenanceControllers.Epl_all_Booking_service);

@@ -29,7 +29,7 @@ router.get('/:id',userController.getAnAuthor);
 router.get('/:id/location', userController.get_location_user);
 
 router.get('/address/userMainternace/:id',userController.get_address_userMain);
-
+router.get('/address/find/near/:id', userController.getNearbyEmployees)
 
 router.put('/updateUser/:id', userController.putUsers);
 router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);

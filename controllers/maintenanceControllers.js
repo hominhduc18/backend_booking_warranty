@@ -1,3 +1,4 @@
+const Employee = require("../Models/employee");
 const Maintenance = require("../Models/maintenance");
 const User = require("../Models/User");
 // const DatePicker = require('date-picker');
@@ -22,8 +23,6 @@ const maintenanceControllers = {
     },
     user_booking_service:async(req, res)=>{
         try{
-            
-            
             const userorderMaintenances = new Maintenance({
                 description: req.body.description,
                 noted: req.body.noted,
@@ -35,22 +34,31 @@ const maintenanceControllers = {
             });
             const addbooking = await userorderMaintenances.save();
             if(req.body.user) {
-        
-            
             const user = User.findById(req.body.user);
 
             await user.updateOne({ $push: { maintenance_Id: addbooking._id } });
-            res.status(200).json(addbooking);
-            
-        }
+            res.status(200).json(addbooking);  
+    }
         }catch (error) {
-            
-            
         res.status(500).json(error);
         }
         
-
     },
+    // add_employee_service: async (req, res) => {
+    //     try {
+    //       const maintenance = await Maintenance.findById(req.params.id);
+    //       if (!maintenance) {
+    //         return res.status(404).json({ message: 'Maintenance not found' });
+    //       }
+      
+    //       conemployee = req.body.employee;
+    //       const updatedMaintenance = await maintenance.save();
+    //       res.status(200).json(updatedMaintenance);
+    //     } catch (error) {
+    //       res.status(500).json(error);
+    //     }
+    //   },
+      
     Epl_booking_service:async(req, res)=>{
         try{
             const Eml_take_orderMaintenances = await new Maintenance({
@@ -97,21 +105,6 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     },
-    get_infor_booking: async(req, res) => {
-        try {
-            const booking = await Maintenance.findById({_id: req.params.id});
-            if(booking){
-                // gán ID người dùng sau khi tìm cho đơn hàng chuẩn bị tạo để lưu trữ thông tin về người dùng đó liên quan đến đơn hàng đó, trong nodejs và mongodb 
-            }else{
-
-            }
-
-        }catch (error) {
-            response.statusText = "App_Booking_Err"
-            res.status(500).json(error);
-        }
-
-    },
     user_all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate
@@ -126,8 +119,6 @@ const maintenanceControllers = {
     },
     Epl_all_Booking_service: async(req, res) =>{
         try {
-            // viết id roi populate
-            //user_id tự đặt đỡ nhầm _id
             const epl = await Maintenance.find({ _id: req.body.epl_id}).populate({path: 'employee'});
             res.status(200).json(epl);
         } catch (error) {
@@ -170,8 +161,8 @@ const maintenanceControllers = {
     },
     getAMaintenance: async (req, res) => {
         try {
-            const maintenance = await Maintenance.findById(req.params.id);
-            res.status(200).json(maintenance);
+            const maintenance = await Maintenance.findById(req.params.id).populate("employee");
+            res.status(200).json(maintenance);// .employee.id
         } catch (error) {
             res.status(500).json(error)
         }

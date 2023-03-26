@@ -15,6 +15,8 @@ router.get('/getAllEmployee', middlewareController.verifyToken,employeeControlle
 router.get('/location/:id/address', employeeControllers.get_location_emp);
 router.put('/updateEmployee/:id', employeeControllers.updateAnEmployee);
 
+
+router.get('/receive/:id',employeeControllers.getAnEmployee_main);
 router.delete('/deleteEmployee/:id',middlewareController.verifydelete,employeeControllers.deleteAnEmployee);
 
 
