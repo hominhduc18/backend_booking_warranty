@@ -54,6 +54,11 @@ const maintenanceSchema = new mongoose.Schema({
         type: String,
         //chưa nhận  0 nhận chưa ht 1 hoàn thành 
     },
+    
+    feedback: {
+        rating: Number,
+        comment: String
+      }
 
    
 },

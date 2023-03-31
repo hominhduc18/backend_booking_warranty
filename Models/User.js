@@ -49,6 +49,7 @@ const userSchema = new mongoose.Schema(
       type: Number,
       
     },
+  
     sex: {
       type: String,
 

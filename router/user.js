@@ -14,7 +14,7 @@ router.post('/loginUser', userController.loginUsers);
 
 //
 router.post('/logoutUser',middlewareControllers.verifyToken, userController.logoutUser);
-router.post('/changepassword', userController.changePasswordUser);
+router.post('/changepassword', userController.updatePassword);
 router.post('/useremailsend', userController.emailSendUser);
 router.post('/booking', userController.Booking_service);
 router.post('/getbooking', userController.all_Booking_service);
@@ -32,7 +32,7 @@ router.get('/address/userMainternace/:id',userController.get_address_userMain);
 router.get('/address/find/near/:id', userController.getNearbyEmployees)
 
 router.put('/updateUser/:id', userController.putUsers);
-router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
+// router.put('/updatePassword', middlewareControllers.verifyToken,userController.updatePassword);
 router.put('/update_location/:id', userController.putUsers_location);
 
 router.delete('/deleteUser/:id',middlewareControllers.verifyToken, middlewareControllers.verifydelete,userController.deleteAnUser);

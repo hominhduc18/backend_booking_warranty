@@ -30,35 +30,89 @@ const maintenanceControllers = {
                 user: req.body.user,
                 startHour:req.body.startHour,
                 address:req.body.address,
-
+                status: "unassigned" // Thêm trường status với giá trị mặc định "unassigned"
             });
             const addbooking = await userorderMaintenances.save();
             if(req.body.user) {
-            const user = User.findById(req.body.user);
-
-            await user.updateOne({ $push: { maintenance_Id: addbooking._id } });
-            res.status(200).json(addbooking);  
-    }
+                const user = User.findById(req.body.user);
+    
+                await user.updateOne({ $push: { maintenance_Id: addbooking._id } });
+                res.status(200).json(addbooking);  
+            }
         }catch (error) {
-        res.status(500).json(error);
-        }
-        
+            res.status(500).json(error);
+        }    
     },
-    // add_employee_service: async (req, res) => {
-    //     try {
-    //       const maintenance = await Maintenance.findById(req.params.id);
-    //       if (!maintenance) {
-    //         return res.status(404).json({ message: 'Maintenance not found' });
-    //       }
+    
+    add_employee_service: async (req, res) => {
+        try {
+            const maintenance = await Maintenance.findById(req.params.id);
+            if (!maintenance) {
+                return res.status(404).json({ message: 'Maintenance not found' });
+            }
+    
+            // Cập nhật thông tin nhân viên
+            maintenance.employee = req.body.employee;
+    
+            // Kiểm tra nếu trạng thái đơn hàng là "unassigned" thì cập nhật thành "đã nhận đơn"
+            if (maintenance.status === "unassigned") {
+                maintenance.status = "assigned";
+            }
+            // Lưu thông tin đơn hàng đã cập nhật
+            const updatedMaintenance = await maintenance.save();
+            res.status(200).json(updatedMaintenance);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+    complete_maintenance_service: async (req, res) => {
+        try {
+          const maintenance = await Maintenance.findById(req.params.id);
+          if (!maintenance) {
+            return res.status(404).json({ message: 'Maintenance not found' });
+          }
       
-    //       conemployee = req.body.employee;
-    //       const updatedMaintenance = await maintenance.save();
-    //       res.status(200).json(updatedMaintenance);
-    //     } catch (error) {
-    //       res.status(500).json(error);
-    //     }
-    //   },
+          // Kiểm tra nếu trạng thái đơn hàng không phải là "assigned" thì không thể hoàn thành
+          if (maintenance.status !== "assigned") {
+            return res.status(400).json({ message: 'Cannot complete maintenance that is not assigned' });
+          }
       
+          // Cập nhật trạng thái đơn hàng thành "completed"
+          maintenance.status = "completed";
+      
+          // Lưu thông tin đơn hàng đã cập nhật
+          const updatedMaintenance = await maintenance.save();
+          res.status(200).json(updatedMaintenance);
+        } catch (error) {
+          res.status(500).json(error);
+        }
+      },
+      user_feed_back: async(req, res) =>{
+        try {
+            const maintenance = await Maintenance.findById(req.params.id);
+            if (!maintenance) {
+              return res.status(404).json({ message: 'Maintenance not found' });
+            }
+        
+            // Check if the maintenance has been completed
+            if (maintenance.status !== "completed") {
+              return res.status(400).json({ message: 'Cannot give feedback for maintenance that is not completed' });
+            }
+        
+            // Add the feedback to the maintenance
+            
+            maintenance.feedback = {
+              rating: req.body.rating,
+              comment: req.body.comment
+            };
+        
+            // Save the updated maintenance
+            const updatedMaintenance = await maintenance.save();
+            res.status(200).json(updatedMaintenance);
+          } catch (error) {
+            res.status(500).json(error);
+          }
+      },
     Epl_booking_service:async(req, res)=>{
         try{
             const Eml_take_orderMaintenances = await new Maintenance({

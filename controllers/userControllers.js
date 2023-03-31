@@ -62,6 +62,7 @@ const userControllers = {
             console.log(error);
         }
     },
+    
     all_Booking_service: async(req, res) =>{
         try {
             // viết id roi populate
@@ -389,66 +390,38 @@ const userControllers = {
         
 
     },
-    changePasswordUser:async (req, res) => {
-        try{
-
-            const data = await emailss.find({code:req.body.code});
-            
-            console.log(req.body.otpCode);
-            
-            const response ={}
-            if(data){
-                 currentTime = new Date().getTime();
-                let diff = data.expiresIn - currentTime;
-                console.log(data.expiresIn - currentTime);
-                if(diff < 0){
-                    response.statusText = 'OTP Expired. PLEASE SEND THE CODE'
-                }else{
-                    response.statusText = 'OTP oke'
-                    const user = await User.findOneAndUpdate({code: req.body.otpCod},
-                        {$set: {
-                            password:req.body.password,
-                            }
-                        });
-                        console.log(user)
-                    const response = await user.save();
-                    
-                }
-            }else{
-                response.statusText = 'Error';
-            }
-            res.status(200).json(response);
-        }catch (error) {
-            return res.status(500).json(error);
-        }
-        
-
-    },
     updatePassword: async (req, res) => {
         try {
-            const username = req.user.sub
-            const { password, newPassword, cfPassword } = req.body
+            const { email, otp, newPassword } = req.body;
+
+            // Tìm kiếm mã OTP tương ứng với email người dùng
+            const otpData = await emailss.findOne({ email, code: otp });
+        
+            // Kiểm tra mã OTP
+            if (!otpData || otpData.expiresIn < new Date().getTime()) {
+              return res.status(400).json({ message: 'Invalid OTP' });
+            }
+        
+            // Tìm kiếm người dùng theo email
+            const user = await User.findOne({ email });
+            if (!user) {
+              return res.status(404).json({ message: 'User not found' });
+            }
+        
+            // Mã hóa mật khẩu mới và lưu vào cơ sở dữ liệu
             const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(newPassword, salt);
-            const data = {
-                password: hash
-            }
-           
-            const auth = await bcrypt.compare(password, user.password)
-            if (auth) {
-                const newUser = await User.findOneAndUpdate({ username: username }, data, { new: true })
-                if (newUser) {
-                    return res.status(200).json({ message: "Cập nhật thành công" })
-                }
-                return res.status(400).json({ message: "Cập nhật không thành công" })
-            }
-            return res.status(400).json({ message: "Sai mật khẩu" })
-
-
-        } catch (error) {
-            console.log(error)
-            return res.status(400).json({ message: "Lỗi cập nhật tài khoản" })
-        }
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedPassword;
+            await user.save();
+        
+            // Xóa mã OTP khỏi cơ sở dữ liệu
+            await emailss.deleteOne({ email, code: otp });
+        
+            res.status(200).json({ message: 'Password reset successfully' });
+          } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Internal server error' });
+          }
     },
     
 };
