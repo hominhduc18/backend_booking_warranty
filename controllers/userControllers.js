@@ -260,22 +260,25 @@ const userControllers = {
     putUsers: async function (req, res, next) {
         try {
             console.log(req.params.id);
-            const user = await User.findOneAndUpdate({id: req.params.id},
-                {$set: {
-                        username:req.body.username,
-                        email:req.body.email,
-                        phone:req.body.phone,
-                        address:req.body.address
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                {
+                    $set: {
+                        username: req.body.username,
+                        email: req.body.email,
+                        phone: req.body.phone,
+                        address: req.body.address
                     }
-                });
-                const response = await user.save();
-                res.status(200).json(response);
+                },
+                { new: true } // trả về bản ghi mới sau khi cập nhật
+            );
+            res.status(200).json(user);
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
         }
-
     },
+    
     putUsers_location: async function (req, res, next) {
         try {
             console.log(req.params.id);
