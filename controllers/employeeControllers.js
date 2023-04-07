@@ -114,7 +114,8 @@ const employeeControllers = {
                     username: req.body.username,
                     email: req.body.email,
                     password: req.body.password,
-                    phone: req.body.phone
+                    phone: req.body.phone,
+                    address: req.body.address
                 }},
                 {new: true}
             );

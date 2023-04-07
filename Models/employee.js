@@ -35,6 +35,9 @@ const employeeSchema = new mongoose.Schema(
       unique: true,
       
     },
+    address:{
+      type: String,
+    },
     sex: {
       type: String,
       
