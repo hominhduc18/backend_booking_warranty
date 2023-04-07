@@ -11,7 +11,7 @@ router.post('/emailsend', employeeControllers.emailSendEmployee);
 // router.post('/epltakebooking', employeeControllers.Epl_Booking_service);
 router.post('/employees/:id/address',employeeControllers.emp_set_address);
 router.get('/getAnEmployee/:id', employeeControllers.getAnEmployee);
-router.get('/getAllEmployee', middlewareController.verifyToken,employeeControllers.getAllEmployee);
+router.get('/getAllEmployee',employeeControllers.getAllEmployee);
 router.get('/location/:id/address', employeeControllers.get_location_emp);
 router.put('/updateEmployee/:id', employeeControllers.updateAnEmployee);
 
