@@ -109,21 +109,22 @@ const employeeControllers = {
    
     updateAnEmployee: async (req, res) => {
         try {
-            console.log(req.params.id);
-            const employee = await Employee.findOneAndUpdate({id: req.params.id},
+            const employee = await Employee.findOneAndUpdate({_id: req.params.id},
                 {$set: {
-                        username:req.body.username,
-                        email:req.body.email,
-                        password:req.body.password,
-                        phone:req.body.phone
-                    }
-                });
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: req.body.password,
+                    phone: req.body.phone
+                }},
+                {new: true}
+            );
             res.status(200).json(employee);
         } catch (error) {
             res.status(500).json(error);
             console.log(error);
         }
     },
+    
 
     AcessToken: (employee) =>{
         return jwt.sign({
