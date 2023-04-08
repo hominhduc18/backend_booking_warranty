@@ -211,7 +211,7 @@ const employeeControllers = {
             const { email, otp, newPassword } = req.body;
 
             // Tìm kiếm mã OTP tương ứng với email người dùng
-            const otpData = await emailss.findOne({ email, code: otp });
+            const otpData = await email.findOne({ email, code: otp });
         
             // Kiểm tra mã OTP
             if (!otpData || otpData.expiresIn < new Date().getTime()) {
@@ -231,7 +231,7 @@ const employeeControllers = {
             await user.save();
         
             // Xóa mã OTP khỏi cơ sở dữ liệu
-            await emailss.deleteOne({ email, code: otp });
+            await email.deleteOne({ email, code: otp });
         
             res.status(200).json({ message: 'Password reset successfully' });
           } catch (error) {
