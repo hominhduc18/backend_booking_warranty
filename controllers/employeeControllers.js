@@ -207,30 +207,38 @@ const employeeControllers = {
     },
 
     changePasswordEmployee:async (req, res) => {
-        let data = await Otp.find({ email:req.body.email, code:req.body.otpCode});
-        console.log(data);
-        const response =[]
-        if(data){
-            let currentTime = new Date().getTime();
-            let diff = data.expiresIn - currentTime;
-            if(diff < 0){
-                response.message = 'Token expires'
-                response.statusText = 'error'
+        try {
+            const { email, otp, newPassword } = req.body;
 
-            }else{
-                let employee = await Employee.findOne({ email: req.body.email})
-                employee.password = req.body.password;
-                employee();
-                response.message = "Password change Successfully"
-                response.statusText ='success';
+            // Tìm kiếm mã OTP tương ứng với email người dùng
+            const otpData = await emailss.findOne({ email, code: otp });
+        
+            // Kiểm tra mã OTP
+            if (!otpData || otpData.expiresIn < new Date().getTime()) {
+              return res.status(400).json({ message: 'Invalid OTP' });
             }
-        }else{
-            response.statusText = 'Error';
-            response.message = 'Email Id Not Exists';
-        }
-        res.status(200).json(response);
-
-    },
+        
+            // Tìm kiếm người dùng theo email
+            const user = await Employee.findOne({ email });
+            if (!user) {
+              return res.status(404).json({ message: 'User not found' });
+            }
+        
+            // Mã hóa mật khẩu mới và lưu vào cơ sở dữ liệu
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedPassword;
+            await user.save();
+        
+            // Xóa mã OTP khỏi cơ sở dữ liệu
+            await emailss.deleteOne({ email, code: otp });
+        
+            res.status(200).json({ message: 'Password reset successfully' });
+          } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Internal server error' });
+          }
+        },
     add_address:async (req, res) => {
         try{
             const add_address_Epl = await new Employee({
