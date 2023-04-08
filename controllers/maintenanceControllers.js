@@ -43,7 +43,18 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }    
     },
-    
+    updateMaintenance: async (req, res) => {
+        try {
+            const updatedMaintenance = await Maintenance.findByIdAndUpdate(
+                req.params.id,
+                { $set: req.body },
+                { new: true }
+            );
+            res.status(200).json(updatedMaintenance);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
     add_employee_service: async (req, res) => {
         try {
             const maintenance = await Maintenance.findById(req.params.id);
@@ -205,6 +216,7 @@ const maintenanceControllers = {
         }
 
     },
+
     getAllMaintenance: async (req, res) => {
         try {
             const maintenance = await Maintenance.find()
@@ -229,15 +241,7 @@ const maintenanceControllers = {
             res.status(500).json(error);
         }
     },
-    updateAMaintenance: async (req, res) => {
-        try {
-            const maintenance =  await Maintenance.findById(req.params.id)
-            await maintenance.updateOne({$set: req.body});
-            res.status(200).json('Updated successfully');
-        } catch (error) {
-            res.status(500).json(error);
-        }
-    },
+   
    
     getorderMaintenance:async(req, res)=>{
         try {
