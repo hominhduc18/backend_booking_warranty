@@ -16,20 +16,15 @@ const adminControllers = {
     register_admin: async (req, res) => {
         try {
           const { email, password } = req.body;
-      
-          // Kiểm tra email đã được sử dụng trước đó chưa
           const adminExists = await Admin.findOne({ email });
           if (adminExists) {
             return res.status(400).json({ error: "Email already exists" });
           }
       
-          // Mã hóa mật khẩu
           const salt = await bcrypt.genSalt(10);
           const hashedPassword = await bcrypt.hash(password, salt);
-      
-          // Tạo tài khoản mới cho admin
           const newAdmin = new Admin({
-            email,
+            email: req.body.email,
             password: hashedPassword,
           });
       
