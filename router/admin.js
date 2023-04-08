@@ -10,7 +10,7 @@ router.post('/registerAdmin', adminControllers.register_admin);
 
 router.post('/loginAdmin', adminControllers.loginAdmin);
 
-router.post('/logoutAdmin',middlewareControllers.verifyToken, adminControllers.logoutAdmin);
+router.post('/logoutAdmin', adminControllers.logoutAdmin);
 
-router.delete('/deleteAdmin/:id',middlewareControllers.verifyToken, adminControllers.deleteAdmin);
+router.delete('/deleteAdmin/:id', adminControllers.deleteAdmin);
 module.exports = router;
