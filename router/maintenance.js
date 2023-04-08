@@ -25,7 +25,7 @@ router.get('/get_order/:id', maintenanceControllers.getorderMaintenance);
 router.delete('/deleteAMaintenance/:id', maintenanceControllers.deleteAMaintenance);
 
 
-router.put('/updateAMaintenance/:id', maintenanceControllers.updateAMaintenance);
+router.put('/updateAMaintenance/:id', maintenanceControllers.updateMaintenance);
 
 
 
