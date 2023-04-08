@@ -15,22 +15,33 @@ let RefreshToken = [];
 const adminControllers = {
     register_admin: async (req, res) => {
         try {
-            console.log(req.body);
-            const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password, salt);
-            //create a new user account
-            const new_admin = await new Admin({
-                email: req.body.email,
-                password: hashed,
-            });
-            //lưu user vào database
-            const adminn = await new_admin.save();
-            res.status(200).json(adminn);
+          const { email, password } = req.body;
+      
+          // Kiểm tra email đã được sử dụng trước đó chưa
+          const adminExists = await Admin.findOne({ email });
+          if (adminExists) {
+            return res.status(400).json({ error: "Email already exists" });
+          }
+      
+          // Mã hóa mật khẩu
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(password, salt);
+      
+          // Tạo tài khoản mới cho admin
+          const newAdmin = new Admin({
+            email,
+            password: hashedPassword,
+          });
+      
+          // Lưu tài khoản vào database
+          const savedAdmin = await newAdmin.save();
+      
+          res.status(200).json(savedAdmin);
         } catch (err) {
-            res.status(500).json(err);
-            console.log(err);
+          console.log(err);
+          res.status(500).json({ error: "Internal server error" });
         }
-    },
+      };
 
         // kc_min: async (req, res) => {
         //     try {
