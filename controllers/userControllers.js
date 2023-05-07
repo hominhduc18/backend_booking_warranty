@@ -124,25 +124,20 @@ const userControllers = {
             // Lấy thông tin địa điểm của người dùng
             const latitude = user.location.latitude;
             const longitude = user.location.longitude;
-        
-            // Trả về phản hồi cho client
             res.status(200).json({ 
                 latitude: latitude,
                  longitude: longitude 
                 });
             
         }catch (error) {
-        
             res.status(500).json({ message: 'Đã xảy ra lỗi' });
-          }
-              
+          }  
     },
      get_address_userMain :async(req, res) => {
         try {
           const user = await User.findById(req.params.id).populate("maintenance_Id");
           const address = user.maintenance_Id.address;
           console.log(address);
-      
           const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
           console.log(url);
           fetch(url)
@@ -218,8 +213,8 @@ const userControllers = {
                     { latitude: userLatitude, longitude: userLongitude },
                     { latitude: employeeLocation.latitude, longitude: employeeLocation.longitude });
                     // console.log("địa điểm gần nhất là:")
-                    console.log(distance <= 100);
-                    return distance <= 1000;
+                    console.log(distance <= 5000);
+                    return distance <= 5000;
                 });
 
                 
