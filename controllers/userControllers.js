@@ -221,10 +221,7 @@ const userControllers = {
 
                 // Create array of locations to display on map
                 const locations = [
-                    { latitude: userLatitude, 
-                    longitude: userLongitude,
-                     title: 'Your Location' },
-
+            
                     nearbyEmployees.map(employeeLocation => ({
                       latitude: employeeLocation.latitude,
                       longitude: employeeLocation.longitude,
