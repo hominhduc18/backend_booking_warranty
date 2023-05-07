@@ -220,15 +220,19 @@ const userControllers = {
                 
 
                 // Create array of locations to display on map
-                const locations = [
-            
+                const locations = 
+                // [
+                    // { latitude: userLatitude, 
+                    // longitude: userLongitude,
+                    //  title: 'Your Location' },
+
                     nearbyEmployees.map(employeeLocation => ({
                       latitude: employeeLocation.latitude,
                       longitude: employeeLocation.longitude,
                       title: employees.find(
                         employee => employee.latitude === employeeLocation.latitude 
                         && employee.longitude === employeeLocation.longitude).name
-                    }))]
+                    }))
                   res.status(200).json({ locations });
                 } 
                     else {
